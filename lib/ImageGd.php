@@ -179,6 +179,30 @@ class Replica_ImageGd
 
 
     /**
+     * Crop image
+     *
+     * @param
+     * @return $this
+     */
+    public function crop($x, $y, $width, $height)
+    {
+        $this->_exceptionIfNotLoaded();
+
+        $this->_width   = ($x + $width  > $this->_width)  ? $this->_width  - $x : $width;
+        $this->_height  = ($x + $height > $this->_height) ? $this->_height - $y : $height;
+
+        $target = $this->_createTrueColor($this->_width, $this->_height);
+        imagecopy($target, $this->_resource, 0, 0, $x, $y, $this->_width, $this->_height);
+
+        imagedestroy($this->_resource);
+        $this->_resource = $target;
+
+
+        return $this;
+    }
+
+
+    /**
      * Create GD image with white background
      *
      * @param int $width

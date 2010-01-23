@@ -29,4 +29,30 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
         $image->resize(10, 10);
     }
 
+
+    /**
+     * Crop image
+     */
+    public function testCropImage()
+    {
+        $image = new Replica_ImageGd;
+        $image->loadFromFile($this->getImgPath('jpg_200x400'));
+
+        $image->crop(0, 0, 10, 10);
+        $this->assertImage($image, 10, 10, 'image/jpeg');
+    }
+
+
+    /**
+     * Crop image with coords shift
+     */
+    public function testCropWithShift()
+    {
+        $image = new Replica_ImageGd;
+        $image->loadFromFile($this->getImgPath('jpg_200x400'));
+
+        $image->crop(190, 390, 200, 400);
+        $this->assertImage($image, 10, 10, 'image/jpeg');
+    }
+
 }

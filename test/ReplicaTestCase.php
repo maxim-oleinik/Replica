@@ -31,9 +31,11 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertImageInfo(Replica_ImageGd $image, $width, $height, $type = 'image/png', $message = null)
     {
-        $this->assertEquals($width,  $image->getWidth(),  $message.': Width');
-        $this->assertEquals($height, $image->getHeight(), $message.': Height');
-        $this->assertEquals($type,   $image->getType(),   $message.': Type');
+        $message = $message ? $message.': ' : null;
+
+        $this->assertEquals($width,  $image->getWidth(),  $message.'Meta (width)');
+        $this->assertEquals($height, $image->getHeight(), $message.'Meta (height)');
+        $this->assertEquals($type,   $image->getType(),   $message.'Meta (type)');
     }
 
 
@@ -42,8 +44,20 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertImageGdSize($img, $width, $height, $message = null)
     {
-        $this->assertEquals(imagesx($img), $width,  $message.' Width');
-        $this->assertEquals(imagesy($img), $height, $message.' Height');
+        $message = $message ? ': '.$message : null;
+
+        $this->assertEquals(imagesx($img), $width,  $message.'Resourse (width)');
+        $this->assertEquals(imagesy($img), $height, $message.'Resourse (height)');
+    }
+
+
+    /**
+     * Assert image
+     */
+    public function assertImage(Replica_ImageGd $image, $width, $height, $type = 'image/png', $message = null)
+    {
+        $this->assertImageInfo($image, $width, $height, $type, $message);
+        $this->assertImageGdSize($image->getResource(), $width, $height, $message);
     }
 
 }
