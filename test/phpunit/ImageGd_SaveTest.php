@@ -10,16 +10,16 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
     public function testSave()
     {
         $files = array(
-            'png_10x12',
+            'png_120x90',
             'gif_16x14',
-            'jpg_200x200',
+            'jpg_8x16',
         );
 
         $image = new Replica_ImageGd;
         foreach ($files as $file) {
 
-            $image->loadFromFile($originPath = $this->getImgPath($file));
-            $actualPath = $this->getTmpName(__METHOD__.'_'.$file);
+            $image->loadFromFile($originPath = $this->getFileNameInput($file));
+            $actualPath = $this->getFileNameActual(__METHOD__.'_'.$file);
             $image->saveAs($actualPath);
 
             $this->assertImageFile($image, $actualPath, $file);

@@ -2,8 +2,10 @@
 
 class ReplicaTestCase extends PHPUnit_Framework_TestCase
 {
-    protected $dirData;
-    protected $dirTmp;
+    private
+        $_dirInput,
+        $_dirExpected,
+        $_dirActual;
 
 
     /**
@@ -11,8 +13,9 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function __construct()
     {
-        $this->dirData = REPLICA_DIR_TEST . '/data';
-        $this->dirTmp  = REPLICA_DIR_TEST . '/tmp';
+        $this->_dirInput    = REPLICA_DIR_TEST . '/fixtures/input';
+        $this->_dirExpected = REPLICA_DIR_TEST . '/fixtures/expected';
+        $this->_dirActual   = REPLICA_DIR_TEST . '/fixtures/actual';
     }
 
 
@@ -21,34 +24,49 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        `rm -f {$this->dirTmp}/*`;
+        `rm -f {$this->_dirActual}/*`;
     }
 
 
     /**
-     * Get data image path by name
+     * Get INPUT image path by name
      *
      * @param  string $fileName
      * @return string
      */
-    public function getImgPath($fileName)
+    public function getFileNameInput($fileName)
     {
-        return  $this->dirData . '/' . $fileName;
+        return  $this->_dirInput . '/' . $fileName;
     }
 
 
     /**
-     * Get tmp file name
+     * Get EXPECTED image path by name
      *
      * @param  string $fileName
      * @return string
      */
-    public function getTmpName($fileName)
+    public function getFileNameExpected($fileName)
     {
         if (strpos($fileName, '::')) {
             $fileName = str_replace('::', '_', $fileName);
         }
-        return $this->dirTmp . '/' . $fileName;
+        return  $this->_dirExpected . '/' . $fileName;
+    }
+
+
+    /**
+     * Get ACTUAL image path by name
+     *
+     * @param  string $fileName
+     * @return string
+     */
+    public function getFileNameActual($fileName)
+    {
+        if (strpos($fileName, '::')) {
+            $fileName = str_replace('::', '_', $fileName);
+        }
+        return $this->_dirActual . '/' . $fileName;
     }
 
 

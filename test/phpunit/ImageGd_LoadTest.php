@@ -5,9 +5,14 @@ require_once dirname(__FILE__).'/../bootstrap.php';
 class Replica_ImageGd_LoadTest extends ReplicaTestCase
 {
     /**
-     * Assert image resource
+     * Assert image is loaded
+     *
+     * @param  Replica_ImageGd $image
+     * @param  bool            $loaded
+     * @param  string          $message
+     * @return void
      */
-    private function assertImageGd(Replica_ImageGd $image, $loaded, $message)
+    private function assertLoaded(Replica_ImageGd $image, $loaded, $message)
     {
         if ($loaded) {
             $this->assertTrue($image->isLoaded(), $message.": Image is loaded");
@@ -22,81 +27,81 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
 
 
     /**
-     * Test: Load from file
+     * Load from file
      */
     public function testLoadFromFile()
     {
         $plan = array(
-            array('png_10x12',   10,  12,  'image/png'),
-            array('gif_16x14',   16,  14,  'image/gif'),
-            array('jpg_200x400', 200, 400, 'image/jpeg'),
+            array('png_120x90', 120, 90, 'image/png'),
+            array('gif_16x14',   16, 14, 'image/gif'),
+            array('jpg_8x16',     8, 16, 'image/jpeg'),
         );
 
         $image = new Replica_ImageGd;
         foreach ($plan as $item) {
             list($name, $width, $height, $type) = $item;
 
-            $this->assertTrue($image->loadFromFile($this->getImgPath($name)), "{$name}: Load successful");
-            $this->assertImageInfo($image, $width, $height, $type, $name);
-            $this->assertImageGd($image, $loaded = true, $name);
+            $this->assertTrue($image->loadFromFile($this->getFileNameInput($name)), "{$name}: Load successful");
+            $this->assertImage($image, $width, $height, $type, $name);
+            $this->assertLoaded($image, $loaded = true, $name);
         }
     }
 
 
     /**
-     * Test: Load from file not image
+     * Load from file not image
      */
     public function testLoadFromFileNotImage()
     {
         $image = new Replica_ImageGd;
         $this->assertFalse($image->loadFromFile(__FILE__), 'Load failed');
-        $this->assertImageGd($image, $loaded = false, 'Not Image');
+        $this->assertLoaded($image, $loaded = false, 'Not Image');
     }
 
 
     /**
-     * Test: Load from string
+     * Load from string
      */
     public function testLoadFromString()
     {
         $plan = array(
-            array('png_10x12',    10,  12, 'image/png'),
-            array('gif_16x14',    16,  14, 'image/gif'),
-            array('jpg_200x400', 200, 400, 'image/jpeg'),
+            array('png_120x90', 120, 90, 'image/png'),
+            array('gif_16x14',   16, 14, 'image/gif'),
+            array('jpg_8x16',     8, 16, 'image/jpeg'),
         );
 
         $image = new Replica_ImageGd;
         foreach ($plan as $item) {
             list($name, $width, $height, $type) = $item;
 
-            $this->assertTrue($image->loadFromString(file_get_contents($this->getImgPath($name)), $type), "{$name}: Load successful");
+            $this->assertTrue($image->loadFromString(file_get_contents($this->getFileNameInput($name)), $type), "{$name}: Load successful");
             $this->assertImageInfo($image, $width, $height, $type, $name);
-            $this->assertImageGd($image, $loaded = true, $name);
+            $this->assertLoaded($image, $loaded = true, $name);
         }
     }
 
 
     /**
-     * Test: Load from string not image
+     * Load from string not image
      */
     public function testLoadFromStringNotImage()
     {
         $image = new Replica_ImageGd;
         $this->assertFalse($image->loadFromString(file_get_contents(__FILE__), 'image/png'), 'Load failed');
-        $this->assertImageGd($image, $loaded = false, 'Not Image');
+        $this->assertLoaded($image, $loaded = false, 'Not Image');
     }
 
 
     /**
-     * Test: Reset image
+     * Reset image
      */
     public function testResetImage()
     {
         $image = new Replica_ImageGd;
-        $image->loadFromFile($this->getImgPath('png_10x12'));
+        $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
         $image->reset();
-        $this->assertImageGd($image, $loaded = false, 'Reset image');
+        $this->assertLoaded($image, $loaded = false, 'Reset image');
         $this->assertImageInfo($image, null, null, null, 'Reset image');
     }
 

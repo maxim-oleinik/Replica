@@ -10,11 +10,12 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
     public function testResize()
     {
         $image = new Replica_ImageGd;
-        $image->loadFromFile($this->getImgPath('jpg_200x400'));
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
-        $image->resize(10, 10);
-        $this->assertImageInfo($image, 10, 10, 'image/jpeg', 'Image');
-        $this->assertImageGdSize($image->getResource(), 10, 10, 'Resource');
+        $image->resize(9, 9);
+        $this->assertImage($image, 9, 9, 'image/png');
+        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
     }
 
 
@@ -36,10 +37,12 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
     public function testCropImage()
     {
         $image = new Replica_ImageGd;
-        $image->loadFromFile($this->getImgPath('jpg_200x400'));
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $image->crop(0, 0, 10, 10);
-        $this->assertImage($image, 10, 10, 'image/jpeg');
+        $this->assertImage($image, 10, 10, 'image/png');
+        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
     }
 
 
@@ -49,10 +52,12 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
     public function testCropWithShift()
     {
         $image = new Replica_ImageGd;
-        $image->loadFromFile($this->getImgPath('jpg_200x400'));
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
-        $image->crop(190, 390, 200, 400);
-        $this->assertImage($image, 10, 10, 'image/jpeg');
+        $image->crop(100, 80, 200, 400);
+        $this->assertImage($image, 20, 10, 'image/png');
+        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
     }
 
 }

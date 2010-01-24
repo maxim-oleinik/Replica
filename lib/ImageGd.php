@@ -251,7 +251,7 @@ class Replica_ImageGd
 
         switch ($this->_type) {
             case self::TYPE_PNG:
-                imagepng($this->_resource, $fullName);
+                imagepng($this->_resource, $fullName, 9);
                 break;
 
             case self::TYPE_GIF:
