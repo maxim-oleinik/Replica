@@ -20,11 +20,30 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Tear down
+     * SetUp
      */
-    public function setUp()
+    final public function setUp()
     {
         `rm -f {$this->_dirActual}/*`;
+
+        $this->_setup();
+    }
+
+    protected function _setUp()
+    {
+    }
+
+
+    /**
+     * TearDown
+     */
+    final public function tearDown()
+    {
+        $this->_teardown();
+    }
+
+    protected function _teardown()
+    {
     }
 
 

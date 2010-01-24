@@ -168,7 +168,7 @@ class Replica_ImageGd
      */
     public function resize($width, $height)
     {
-        $this->_exceptionIfNotLoaded();
+        $this->exceptionIfNotLoaded();
 
         // Do not resize with same size
         if ($width == $this->_width && $height == $this->_height) {
@@ -198,7 +198,7 @@ class Replica_ImageGd
      */
     public function crop($x, $y, $width, $height)
     {
-        $this->_exceptionIfNotLoaded();
+        $this->exceptionIfNotLoaded();
 
         $this->_width   = ($x + $width  > $this->_width)  ? $this->_width  - $x : $width;
         $this->_height  = ($x + $height > $this->_height) ? $this->_height - $y : $height;
@@ -235,7 +235,7 @@ class Replica_ImageGd
      *
      * @throws Replica_Exception
      */
-    protected function _exceptionIfNotLoaded()
+    public function exceptionIfNotLoaded()
     {
         if (!$this->isLoaded()) {
             throw new Replica_Exception('Image NOT loaded');
@@ -251,7 +251,7 @@ class Replica_ImageGd
      */
     public function saveAs($fullName)
     {
-        $this->_exceptionIfNotLoaded();
+        $this->exceptionIfNotLoaded();
 
         switch ($this->_type) {
             case self::TYPE_PNG:
