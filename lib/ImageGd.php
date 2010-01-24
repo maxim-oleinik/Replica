@@ -2,6 +2,11 @@
 
 class Replica_ImageGd
 {
+    const TYPE_PNG  = 'image/png';
+    const TYPE_GIF  = 'image/gif';
+    const TYPE_JPEG = 'image/jpeg';
+
+
     /**
      * GD resource
      */
@@ -181,7 +186,10 @@ class Replica_ImageGd
     /**
      * Crop image
      *
-     * @param
+     * @param  int $x      - src lef-top corner X
+     * @param  int $y      - src lef-top corner Y
+     * @param  int $width  - destination width
+     * @param  int $height - destination height
      * @return $this
      */
     public function crop($x, $y, $width, $height)
@@ -227,6 +235,35 @@ class Replica_ImageGd
     {
         if (!$this->isLoaded()) {
             throw new Replica_Exception('Image NOT loaded');
+        }
+    }
+
+
+    /**
+     * Save file
+     *
+     * @param  string $fullName
+     * @return void
+     */
+    public function saveAs($fullName)
+    {
+        $this->_exceptionIfNotLoaded();
+
+        switch ($this->_type) {
+            case self::TYPE_PNG:
+                imagepng($this->_resource, $fullName);
+                break;
+
+            case self::TYPE_GIF:
+                imagegif($this->_resource, $fullName);
+                break;
+
+            case self::TYPE_JPEG:
+                imagejpeg($this->_resource, $fullName);
+                break;
+
+            default:
+                throw new Replica_Exception(__METHOD__.": Unknpwn image type `{$this->_type}`");
         }
     }
 

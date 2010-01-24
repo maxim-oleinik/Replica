@@ -3,6 +3,7 @@
 class ReplicaTestCase extends PHPUnit_Framework_TestCase
 {
     protected $dirData;
+    protected $dirTmp;
 
 
     /**
@@ -10,7 +11,17 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function __construct()
     {
-        $this->dirData   = REPLICA_DIR_TEST . '/data';
+        $this->dirData = REPLICA_DIR_TEST . '/data';
+        $this->dirTmp  = REPLICA_DIR_TEST . '/tmp';
+    }
+
+
+    /**
+     * Tear down
+     */
+    public function setUp()
+    {
+        `rm -f {$this->dirTmp}/*`;
     }
 
 
@@ -23,6 +34,21 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
     public function getImgPath($fileName)
     {
         return  $this->dirData . '/' . $fileName;
+    }
+
+
+    /**
+     * Get tmp file name
+     *
+     * @param  string $fileName
+     * @return string
+     */
+    public function getTmpName($fileName)
+    {
+        if (strpos($fileName, '::')) {
+            $fileName = str_replace('::', '_', $fileName);
+        }
+        return $this->dirTmp . '/' . $fileName;
     }
 
 
@@ -58,6 +84,21 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
     {
         $this->assertImageInfo($image, $width, $height, $type, $message);
         $this->assertImageGdSize($image->getResource(), $width, $height, $message);
+    }
+
+
+    /**
+     * Assert image file
+     */
+    public function assertImageFile($expected, $actual, $message = null)
+    {
+        if ($expected instanceof Replica_ImageGd) {
+            $image = new Replica_ImageGd;
+            $image->loadFromFile($actual);
+            $this->assertImage($image, $expected->getWidth(), $expected->getHeight(), $expected->getType(), $message);
+        } else {
+            $this->assertEquals(md5_file($expected), md5_file($actual), $message);
+        }
     }
 
 }
