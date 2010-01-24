@@ -16,6 +16,12 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
         $this->assertImage($image, 9, 9, 'image/png');
         $image->saveAs($path = $this->getFileNameActual(__METHOD__));
         $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
+
+        // Equal size
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
+        $image->resize(120, 90);
+        $image->saveAs($path = $this->getFileNameActual(__METHOD__).'_equals');
+        $this->assertImageFile($this->getFileNameInput('png_120x90'), $path);
     }
 
 

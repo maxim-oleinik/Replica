@@ -170,9 +170,13 @@ class Replica_ImageGd
     {
         $this->_exceptionIfNotLoaded();
 
+        // Do not resize with same size
+        if ($width == $this->_width && $height == $this->_height) {
+            return;
+        }
+
         $target = $this->_createTrueColor($width, $height);
         imagecopyresampled($target, $this->_resource, 0, 0, 0, 0, $width, $height, $this->_width, $this->_height);
-
         imagedestroy($this->_resource);
         $this->_resource = $target;
 
