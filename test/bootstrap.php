@@ -8,5 +8,4 @@ define('REPLICA_DIR_LIB',  REPLICA_DIR.'/lib');
 require REPLICA_DIR_TEST . '/ReplicaTestCase.php';
 
 // Lib
-require REPLICA_DIR_LIB . '/Exception.php';
-require REPLICA_DIR_LIB . '/ImageGd.php';
+require REPLICA_DIR . '/include.php';
