@@ -89,6 +89,27 @@ class Replica_ImageGd
 
 
     /**
+     * Set image mime type (to save image)
+     *
+     * @param  strnig $mimeType
+     * @return void
+     */
+    public function setType($mimeType)
+    {
+        switch ($mimeType) {
+            case self::TYPE_PNG:
+            case self::TYPE_GIF:
+            case self::TYPE_JPEG:
+                $this->_type = $mimeType;
+                break;
+
+            default:
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
+        }
+    }
+
+
+    /**
      * Load image from file
      *
      * @param  string $filePath
@@ -247,11 +268,16 @@ class Replica_ImageGd
      * Save file
      *
      * @param  string $fullName
+     * @param  string $mimeType
      * @return void
      */
-    public function saveAs($fullName)
+    public function saveAs($fullName, $mimeType = null)
     {
         $this->exceptionIfNotLoaded();
+
+        if ($mimeType) {
+            $this->setType($mimeType);
+        }
 
         switch ($this->_type) {
             case self::TYPE_PNG:
@@ -267,7 +293,7 @@ class Replica_ImageGd
                 break;
 
             default:
-                throw new Replica_Exception(__METHOD__.": Unknpwn image type `{$this->_type}`");
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->_type}`");
         }
     }
 

@@ -2,7 +2,7 @@
 
 class ReplicaTestCase extends PHPUnit_Framework_TestCase
 {
-    private
+    protected
         $_dirInput,
         $_dirExpected,
         $_dirActual;
@@ -24,7 +24,7 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     final public function setUp()
     {
-        `rm -f {$this->_dirActual}/*`;
+        `rm -rf {$this->_dirActual}/*`;
 
         $this->_setup();
     }
@@ -90,37 +90,28 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Assert image info
+     * Assert image
      */
-    public function assertImageInfo(Replica_ImageGd $image, $width, $height, $type = 'image/png', $message = null)
+    public function assertImage($image, $width, $height, $type = 'image/png', $message = null)
     {
         $message = $message ? $message.': ' : null;
 
+        if (!$image instanceof Replica_ImageGd) {
+            $path = (string) $image;
+            $image = new Replica_ImageGd;
+            $this->assertTrue($image->loadFromFile($path), $message."Image is loaded from file `{$path}`");
+        }
+
+        $this->assertTrue($image->isLoaded(), $message.'Image is loaded');
+
+        // Meta
         $this->assertEquals($width,  $image->getWidth(),  $message.'Meta (width)');
         $this->assertEquals($height, $image->getHeight(), $message.'Meta (height)');
         $this->assertEquals($type,   $image->getType(),   $message.'Meta (type)');
-    }
 
-
-    /**
-     * Assert GD resource size
-     */
-    public function assertImageGdSize($img, $width, $height, $message = null)
-    {
-        $message = $message ? ': '.$message : null;
-
-        $this->assertEquals(imagesx($img), $width,  $message.'Resourse (width)');
-        $this->assertEquals(imagesy($img), $height, $message.'Resourse (height)');
-    }
-
-
-    /**
-     * Assert image
-     */
-    public function assertImage(Replica_ImageGd $image, $width, $height, $type = 'image/png', $message = null)
-    {
-        $this->assertImageInfo($image, $width, $height, $type, $message);
-        $this->assertImageGdSize($image->getResource(), $width, $height, $message);
+        // GD
+        $this->assertEquals(imagesx($image->getResource()), $width,  $message.'Resource (width)');
+        $this->assertEquals(imagesy($image->getResource()), $height, $message.'Resource (height)');
     }
 
 

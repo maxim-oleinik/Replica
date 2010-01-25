@@ -29,4 +29,19 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
         }
     }
 
+
+    /**
+     * Save with type
+     */
+    public function testSaveWithType()
+    {
+        $image = new Replica_ImageGd;
+        $image->loadFromFile($this->getFileNameInput('gif_16x14'));
+
+        $path = $this->getFileNameActual(__METHOD__);
+        $image->saveAs($path, 'image/png');
+
+        $this->assertImage($path, 16, 14, 'image/png');
+    }
+
 }
