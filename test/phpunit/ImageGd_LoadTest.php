@@ -75,7 +75,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
             list($name, $width, $height, $type) = $item;
 
             $this->assertTrue($image->loadFromString(file_get_contents($this->getFileNameInput($name)), $type), "{$name}: Load successful");
-            $this->assertImageInfo($image, $width, $height, $type, $name);
+            $this->assertImage($image, $width, $height, $type, $name);
             $this->assertLoaded($image, $loaded = true, $name);
         }
     }
@@ -102,7 +102,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
 
         $image->reset();
         $this->assertLoaded($image, $loaded = false, 'Reset image');
-        $this->assertImageInfo($image, null, null, null, 'Reset image');
+        $this->assertImage($image, null, null, null, 'Reset image');
     }
 
 }

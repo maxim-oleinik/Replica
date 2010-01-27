@@ -102,16 +102,18 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
             $this->assertTrue($image->loadFromFile($path), $message."Image is loaded from file `{$path}`");
         }
 
-        $this->assertTrue($image->isLoaded(), $message.'Image is loaded');
-
         // Meta
         $this->assertEquals($width,  $image->getWidth(),  $message.'Meta (width)');
         $this->assertEquals($height, $image->getHeight(), $message.'Meta (height)');
         $this->assertEquals($type,   $image->getType(),   $message.'Meta (type)');
 
-        // GD
-        $this->assertEquals(imagesx($image->getResource()), $width,  $message.'Resource (width)');
-        $this->assertEquals(imagesy($image->getResource()), $height, $message.'Resource (height)');
+        if (null !== $width &&  null !== $height) {
+            $this->assertTrue($image->isLoaded(), $message.'Image is loaded');
+
+            // GD
+            $this->assertEquals(imagesx($image->getResource()), $width,  $message.'Resource (width)');
+            $this->assertEquals(imagesy($image->getResource()), $height, $message.'Resource (height)');
+        }
     }
 
 
