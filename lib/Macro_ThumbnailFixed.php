@@ -34,6 +34,22 @@ class Replica_Macro_ThumbnailFixed implements Replica_Macro_Interface
 
 
     /**
+     * Get macro parameters
+     *
+     * @return array
+     */
+    public function getParameters()
+    {
+        return array(
+            'width'      => $this->_width,
+            'height'     => $this->_height,
+            'cropWidth'  => $this->_cropWidth,
+            'cropHeight' => $this->_cropHeight,
+        );
+    }
+
+
+    /**
      * Run
      *
      * @param  Replica_ImageGD $image

@@ -5,6 +5,22 @@ require_once dirname(__FILE__).'/../bootstrap.php';
 class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
 {
     /**
+     * Get paramentes
+     */
+    public function testGetParameters()
+    {
+        $macro = new Replica_Macro_ThumbnailFixed($width = 10, $height = 15, $cropWidth = 'right', $cropHeight = 'bottom');
+        $expected = array(
+            'width'      => $width,
+            'height'     => $height,
+            'cropWidth'  => $cropWidth,
+            'cropHeight' => $cropHeight,
+        );
+        $this->assertEquals($expected, $macro->getParameters());
+    }
+
+
+    /**
      * Thumbnail
      */
     public function testThumbnail()

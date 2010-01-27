@@ -5,6 +5,20 @@ require_once dirname(__FILE__).'/../bootstrap.php';
 class Replica_Macro_ThumbnailFitTest extends ReplicaTestCase
 {
     /**
+     * Get paramentes
+     */
+    public function testGetParameters()
+    {
+        $macro = new Replica_Macro_ThumbnailFit($width = 10, $height = 15);
+        $expected = array(
+            'maxWidth'  => $width,
+            'maxHeight' => $height,
+        );
+        $this->assertEquals($expected, $macro->getParameters());
+    }
+
+
+    /**
      * Thumbnail
      */
     public function testThumbnail()

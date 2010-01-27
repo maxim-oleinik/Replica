@@ -21,6 +21,20 @@ class Replica_Macro_ThumbnailFit implements Replica_Macro_Interface
 
 
     /**
+     * Get macro parameters
+     *
+     * @return array
+     */
+    public function getParameters()
+    {
+        return array(
+            'maxWidth'  => $this->_maxWidth,
+            'maxHeight' => $this->_maxHeight,
+        );
+    }
+
+
+    /**
      * Run
      *
      * @param  Replica_ImageGD $image
