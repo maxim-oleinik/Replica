@@ -18,7 +18,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testSetGetMacro()
     {
-        Replica::setMacro('macro_name', $macro = $this->getMock('Replica_Macro_Interface'));
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
         $this->assertSame($macro, Replica::getMacro('macro_name'));
     }
 
@@ -28,7 +28,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testSetMacroWithInvalidName()
     {
-        $macro = $this->getMock('Replica_Macro_Interface');
+        $macro = new Replica_Macro_Fake;
 
         $str = ' :;\\/~`!@#$%^&*()-=+[]{}\'\"|?<>,.я';
         for ($i=0, $n=strlen($str); $i<$n; $i++) {
@@ -55,7 +55,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testResetRegistry()
     {
-        Replica::setMacro('macro_name', $macro = $this->getMock('Replica_Macro_Interface'));
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
         Replica::removeAll();
         $this->setExpectedException('Replica_Exception', 'Unknown macro');
         Replica::getMacro('macro_name');
@@ -70,7 +70,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
         $image = new Replica_ImageGD;
         $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
-        $macro = $this->getMock('Replica_Macro_Interface', array('run'));
+        $macro = $this->getMock('Replica_Macro_Fake', array('run'));
         $macro->expects($this->once())
               ->method('run')
               ->with($this->equalTo($image));
@@ -95,7 +95,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testApplyMacroWithEmptyImage()
     {
-        Replica::setMacro('macro_name', $macro = $this->getMock('Replica_Macro_Interface'));
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
 
         $this->setExpectedException('Replica_Exception', 'Image NOT loaded');
         Replica::applyMacro('macro_name', new Replica_ImageGD);
