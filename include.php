@@ -5,6 +5,7 @@ $libDir = dirname(__FILE__) . '/lib';
 // Lib
 require $libDir . '/Replica.php';
 require $libDir . '/Exception.php';
+require $libDir . '/ImageAbstract.php';
 require $libDir . '/ImageGd.php';
 
 require $libDir . '/ImageProxy.php';

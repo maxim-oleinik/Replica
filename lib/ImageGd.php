@@ -1,36 +1,11 @@
 <?php
 
-class Replica_ImageGd
+class Replica_ImageGd extends Replica_ImageAbstract
 {
-    const TYPE_PNG  = 'image/png';
-    const TYPE_GIF  = 'image/gif';
-    const TYPE_JPEG = 'image/jpeg';
-
-
     /**
      * GD resource
      */
     protected $_resource;
-
-    /**
-     * Image width
-     */
-    protected $_width;
-
-    /**
-     * Image height
-     */
-    protected $_height;
-
-    /**
-     * Output image mime type
-     */
-    protected $_type;
-
-    /**
-     * Flag: image is loaded
-     */
-    protected $_isLoaded = false;
 
 
     /**
@@ -41,71 +16,6 @@ class Replica_ImageGd
     public function getResource()
     {
         return $this->_resource;
-    }
-
-
-    /**
-     * If image is loaded
-     *
-     * @return bool
-     */
-    public function isLoaded()
-    {
-        return $this->_isLoaded;
-    }
-
-
-    /**
-     * Get image width
-     *
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->_width;
-    }
-
-
-    /**
-     * Get image height
-     *
-     * @return int
-     */
-    public function getHeight()
-    {
-        return $this->_height;
-    }
-
-
-    /**
-     * Get image mime type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->_type;
-    }
-
-
-    /**
-     * Set image mime type (to save image)
-     *
-     * @param  strnig $mimeType
-     * @return void
-     */
-    public function setType($mimeType)
-    {
-        switch ($mimeType) {
-            case self::TYPE_PNG:
-            case self::TYPE_GIF:
-            case self::TYPE_JPEG:
-                $this->_type = $mimeType;
-                break;
-
-            default:
-                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
-        }
     }
 
 
@@ -132,6 +42,7 @@ class Replica_ImageGd
      * Load image from string
      *
      * @param  string $filePath
+     * @param  string $type     - mime type
      * @return bool
      */
     public function loadFromString($data, $type = 'image/png')
@@ -252,19 +163,6 @@ class Replica_ImageGd
 
 
     /**
-     * Throw exception if image is not loaded
-     *
-     * @throws Replica_Exception
-     */
-    public function exceptionIfNotLoaded()
-    {
-        if (!$this->isLoaded()) {
-            throw new Replica_Exception('Image NOT loaded');
-        }
-    }
-
-
-    /**
      * Save file
      *
      * @param  string $fullName
@@ -301,16 +199,10 @@ class Replica_ImageGd
     /**
      * Reset image
      */
-    public function reset()
+    public function _doReset()
     {
-        if ($this->isLoaded()) {
-            imagedestroy($this->_resource);
-            $this->_resource = null;
-            $this->_width    = null;
-            $this->_height   = null;
-            $this->_type     = null;
-            $this->_isLoaded = false;
-        }
+        imagedestroy($this->_resource);
+        $this->_resource = null;
     }
 
 }
