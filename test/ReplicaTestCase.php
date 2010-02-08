@@ -24,7 +24,7 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     final public function setUp()
     {
-        `rm -rf {$this->_dirActual}/*`;
+        `rm -rf {$this->_dirActual}; mkdir {$this->_dirActual}`;
 
         $this->_setup();
     }
