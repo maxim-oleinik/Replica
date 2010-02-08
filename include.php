@@ -3,16 +3,16 @@
 $libDir = dirname(__FILE__) . '/lib';
 
 // Lib
-require $libDir . '/Replica.php';
-require $libDir . '/Exception.php';
-require $libDir . '/ImageAbstract.php';
-require $libDir . '/ImageGd.php';
+require_once $libDir . '/Replica.php';
+require_once $libDir . '/Exception.php';
+require_once $libDir . '/ImageAbstract.php';
+require_once $libDir . '/ImageGd.php';
 
-require $libDir . '/ImageProxy.php';
-require $libDir . '/ImageProxy_FromFile.php';
-require $libDir . '/Macro_Cache.php';
+require_once $libDir . '/ImageProxy.php';
+require_once $libDir . '/ImageProxy_FromFile.php';
+require_once $libDir . '/Macro_Cache.php';
 
-require $libDir . '/Macro_Interface.php';
-require $libDir . '/Macro_ThumbnailFit.php';
-require $libDir . '/Macro_ThumbnailFixed.php';
-require $libDir . '/Macro_Fake.php';
+require_once $libDir . '/Macro_Interface.php';
+require_once $libDir . '/Macro_ThumbnailFit.php';
+require_once $libDir . '/Macro_ThumbnailFixed.php';
+require_once $libDir . '/Macro_Fake.php';
