@@ -18,7 +18,7 @@ abstract class Replica_ImageProxy_Abstract
      *
      * @return Replica_ImageGD
      */
-    abstract protected function _loadImage(Replica_ImageAbstract $image);
+    abstract protected function _loadImage(Replica_Image_Abstract $image);
 
 
     /**

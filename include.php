@@ -5,7 +5,7 @@ $libDir = dirname(__FILE__) . '/lib';
 // Lib
 require_once $libDir . '/Replica.php';
 require_once $libDir . '/Exception.php';
-require_once $libDir . '/ImageAbstract.php';
+require_once $libDir . '/Image_Abstract.php';
 require_once $libDir . '/ImageGd.php';
 
 require_once $libDir . '/ImageProxy_Abstract.php';

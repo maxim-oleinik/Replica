@@ -34,7 +34,7 @@ class Replica_ImageProxy_FromFile extends Replica_ImageProxy_Abstract
      *
      * @return Replica_ImageGD
      */
-    protected function _loadImage(Replica_ImageAbstract $image)
+    protected function _loadImage(Replica_Image_Abstract $image)
     {
         $image->loadFromFile($this->_file);
     }

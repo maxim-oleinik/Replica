@@ -1,6 +1,6 @@
 <?php
 
-abstract class Replica_ImageAbstract
+abstract class Replica_Image_Abstract
 {
     const TYPE_PNG  = 'image/png';
     const TYPE_GIF  = 'image/gif';
