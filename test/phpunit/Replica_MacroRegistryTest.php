@@ -18,7 +18,10 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testSetGetMacro()
     {
+        $this->assertFalse(Replica::hasMacro('macro_name'));
+
         Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
+        $this->assertTrue(Replica::hasMacro('macro_name'));
         $this->assertSame($macro, Replica::getMacro('macro_name'));
     }
 
@@ -57,6 +60,8 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
     {
         Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
         Replica::removeAll();
+        $this->assertFalse(Replica::hasMacro('macro_name'));
+
         $this->setExpectedException('Replica_Exception', 'Unknown macro');
         Replica::getMacro('macro_name');
     }

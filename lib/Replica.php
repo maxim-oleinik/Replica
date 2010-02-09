@@ -48,6 +48,18 @@ class Replica
 
 
     /**
+     * Has macro?
+     *
+     * @param  string $name
+     * @return bool
+     */
+    static public function hasMacro($name)
+    {
+        return isset(self::$_registry[$name]);
+    }
+
+
+    /**
      * Apply macro
      *
      * @param  string          $name
