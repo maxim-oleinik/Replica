@@ -1,6 +1,6 @@
 <?php
 
-class Replica_Macro_Cache
+class Replica_Macro_CacheManager
 {
     /**
      * Save dir

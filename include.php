@@ -10,7 +10,7 @@ require_once $libDir . '/ImageGd.php';
 
 require_once $libDir . '/ImageProxy.php';
 require_once $libDir . '/ImageProxy_FromFile.php';
-require_once $libDir . '/Macro_Cache.php';
+require_once $libDir . '/Macro_CacheManager.php';
 
 require_once $libDir . '/Macro_Interface.php';
 require_once $libDir . '/Macro_ThumbnailFit.php';
