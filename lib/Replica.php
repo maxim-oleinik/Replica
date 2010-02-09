@@ -13,13 +13,6 @@ class Replica
     private static $_cacheManager;
 
 
-    /**
-     * Static class
-     */
-    private function __construct() {}
-    private function __clone() {}
-
-
     // Macro
     // -------------------------------------------------------------------------
 
