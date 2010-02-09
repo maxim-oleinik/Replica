@@ -63,11 +63,11 @@ class Replica
     /**
      * Apply macro
      *
-     * @param  string          $name
-     * @param  Replica_ImageGD $image
+     * @param  string                 $name
+     * @param  Replica_Image_Abstract $image
      * @return void
      */
-    static public function applyMacro($name, Replica_ImageGD $image)
+    static public function applyMacro($name, Replica_Image_Abstract $image)
     {
         $macro = self::getMacro($name);
         $image->exceptionIfNotLoaded();

@@ -7,12 +7,12 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
     /**
      * Assert image is loaded
      *
-     * @param  Replica_ImageGd $image
+     * @param  Replica_Image_Gd $image
      * @param  bool            $loaded
      * @param  string          $message
      * @return void
      */
-    private function assertLoaded(Replica_ImageGd $image, $loaded, $message)
+    private function assertLoaded(Replica_Image_Gd $image, $loaded, $message)
     {
         if ($loaded) {
             $this->assertTrue($image->isLoaded(), $message.": Image is loaded");
@@ -37,7 +37,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
             array('jpg_8x16',     8, 16, 'image/jpeg'),
         );
 
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach ($plan as $item) {
             list($name, $width, $height, $type) = $item;
 
@@ -53,7 +53,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
      */
     public function testLoadFromFileNotImage()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $this->assertFalse($image->loadFromFile(__FILE__), 'Load failed');
         $this->assertLoaded($image, $loaded = false, 'Not Image');
     }
@@ -70,7 +70,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
             array('jpg_8x16',     8, 16, 'image/jpeg'),
         );
 
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach ($plan as $item) {
             list($name, $width, $height, $type) = $item;
 
@@ -86,7 +86,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
      */
     public function testLoadFromStringNotImage()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $this->assertFalse($image->loadFromString(file_get_contents(__FILE__), 'image/png'), 'Load failed');
         $this->assertLoaded($image, $loaded = false, 'Not Image');
     }
@@ -97,7 +97,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
      */
     public function testResetImage()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
         $image->reset();

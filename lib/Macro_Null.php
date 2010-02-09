@@ -2,6 +2,11 @@
 
 class Replica_Macro_Null implements Replica_Macro_Interface
 {
+    /**
+     * Get macro parameters
+     *
+     * @return array
+     */
     public function getParameters()
     {
         return array();
@@ -11,10 +16,10 @@ class Replica_Macro_Null implements Replica_Macro_Interface
     /**
      * Run
      *
-     * @param  Replica_ImageGD $image
+     * @param  Replica_Image_Abstract $image
      * @return void
      */
-    public function run(Replica_ImageGD $image)
+    public function run(Replica_Image_Abstract $image)
     {
     }
 

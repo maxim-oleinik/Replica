@@ -31,7 +31,7 @@ class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
             'CropHeight'        => array('png_90x120', 30, 30),
         );
 
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach ($plan as $testName => $item) {
             list($file, $newWith, $newHeight) = $item;
 
@@ -54,7 +54,7 @@ class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
      */
     public function testCropWidth()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach (array('left', 'center', 'right') as $pos) {
 
             $image->loadFromFile($this->getFileNameInput('png_120x90'));
@@ -76,7 +76,7 @@ class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
      */
     public function testCropHeight()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach (array('top', 'center', 'bottom') as $pos) {
 
             $image->loadFromFile($this->getFileNameInput('png_90x120'));
@@ -98,7 +98,7 @@ class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
      */
     public function testNoChangesIfTooSmall()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $macro = new Replica_Macro_ThumbnailFixed($newWith = 300, $newHeight = 300);

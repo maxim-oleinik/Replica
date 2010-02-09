@@ -58,7 +58,7 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
             $path = $this->manager->get($macro, $imageProxy, $type);
             $file = $this->_dirActual . '/' . $path;
 
-            $image = new Replica_ImageGD;
+            $image = new Replica_Image_Gd;
             $image->loadFromFile($file);
 
             $this->assertImage($image, 120, 90, $type, $type);

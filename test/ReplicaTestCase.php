@@ -99,9 +99,9 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
     {
         $message = $message ? $message.': ' : null;
 
-        if (!$image instanceof Replica_ImageGd) {
+        if (!$image instanceof Replica_Image_Gd) {
             $path = (string) $image;
-            $image = new Replica_ImageGd;
+            $image = new Replica_Image_Gd;
             $this->assertTrue($image->loadFromFile($path), $message."Image is loaded from file `{$path}`");
         }
 
@@ -125,8 +125,8 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
      */
     public function assertImageFile($expected, $actual, $message = null)
     {
-        if ($expected instanceof Replica_ImageGd) {
-            $image = new Replica_ImageGd;
+        if ($expected instanceof Replica_Image_Gd) {
+            $image = new Replica_Image_Gd;
             $image->loadFromFile($actual);
             $this->assertImage($image, $expected->getWidth(), $expected->getHeight(), $expected->getType(), $message);
         } else {

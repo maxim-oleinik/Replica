@@ -16,7 +16,8 @@ abstract class Replica_ImageProxy_Abstract
     /**
      * Create image
      *
-     * @return Replica_ImageGD
+     * @param  Replica_Image_Abstract $image
+     * @return void
      */
     abstract protected function _loadImage(Replica_Image_Abstract $image);
 
@@ -24,7 +25,7 @@ abstract class Replica_ImageProxy_Abstract
     /**
      * Get image
      *
-     * @return Replica_ImageGD
+     * @return Replica_Image_Abstract
      */
     public function getImage()
     {
@@ -40,11 +41,11 @@ abstract class Replica_ImageProxy_Abstract
     /**
      * Create image instance
      *
-     * @return Replica_ImageGd
+     * @return Replica_Image_Gd
      */
     protected function _createImage()
     {
-        return new Replica_ImageGd;
+        return new Replica_Image_Gd;
     }
 
 }

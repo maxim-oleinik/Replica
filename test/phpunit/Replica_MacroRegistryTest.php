@@ -72,7 +72,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testApplyMacro()
     {
-        $image = new Replica_ImageGD;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
         $macro = $this->getMock('Replica_Macro_Null', array('run'));
@@ -91,7 +91,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
     public function testApplyUnknownMacro()
     {
         $this->setExpectedException('Replica_Exception', 'Unknown macro');
-        Replica::applyMacro('macro_name', new Replica_ImageGD);
+        Replica::applyMacro('macro_name', new Replica_Image_Gd);
     }
 
 
@@ -103,7 +103,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
         Replica::setMacro('macro_name', $macro = new Replica_Macro_Null);
 
         $this->setExpectedException('Replica_Exception', 'Image NOT loaded');
-        Replica::applyMacro('macro_name', new Replica_ImageGD);
+        Replica::applyMacro('macro_name', new Replica_Image_Gd);
     }
 
 }

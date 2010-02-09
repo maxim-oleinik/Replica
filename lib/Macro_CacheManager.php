@@ -32,7 +32,7 @@ class Replica_Macro_CacheManager
      * @param  string                         $mimeType
      * @return void
      */
-    public function get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = Replica_ImageGD::TYPE_PNG)
+    public function get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = Replica_Image_Abstract::TYPE_PNG)
     {
         // Get macro
         if ($macro instanceof Replica_Macro_Interface) {
@@ -82,15 +82,15 @@ class Replica_Macro_CacheManager
     private function _getExtension($mimeType)
     {
         switch ($mimeType) {
-            case Replica_ImageGD::TYPE_PNG:
+            case Replica_Image_Abstract::TYPE_PNG:
                 return '.png';
                 break;
 
-            case Replica_ImageGD::TYPE_GIF:
+            case Replica_Image_Abstract::TYPE_GIF:
                 return '.gif';
                 break;
 
-            case Replica_ImageGD::TYPE_JPEG:
+            case Replica_Image_Abstract::TYPE_JPEG:
                 return '.jpg';
                 break;
 

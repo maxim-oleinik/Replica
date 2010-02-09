@@ -29,7 +29,7 @@ class Replica_Macro_ThumbnailFitTest extends ReplicaTestCase
             'FitHeight'         => array('png_90x120', 80, 80, 60, 80),
         );
 
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach ($plan as $testName => $item) {
             list($file, $newWith, $newHeight, $expectedWidth, $expectedHeight) = $item;
 
@@ -52,7 +52,7 @@ class Replica_Macro_ThumbnailFitTest extends ReplicaTestCase
      */
     public function testNoChangesIfTooSmall()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $macro = new Replica_Macro_ThumbnailFit($newWith = 300, $newHeight = 300);

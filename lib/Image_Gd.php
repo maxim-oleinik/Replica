@@ -1,6 +1,6 @@
 <?php
 
-class Replica_ImageGd extends Replica_Image_Abstract
+class Replica_Image_Gd extends Replica_Image_Abstract
 {
     /**
      * GD resource

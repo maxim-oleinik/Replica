@@ -32,7 +32,7 @@ class Replica_ImageProxy_FromFile extends Replica_ImageProxy_Abstract
     /**
      * Create image
      *
-     * @return Replica_ImageGD
+     * @return Replica_Image_Gd
      */
     protected function _loadImage(Replica_Image_Abstract $image)
     {

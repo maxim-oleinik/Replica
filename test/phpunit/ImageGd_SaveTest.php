@@ -15,7 +15,7 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
             'jpg_8x16',
         );
 
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         foreach ($files as $file) {
 
             $image->loadFromFile($originPath = $this->getFileNameInput($file));
@@ -23,7 +23,7 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
             $image->saveAs($actualPath);
 
             $this->assertImageFile($image, $actualPath, $file);
-            if ($image->getType() != Replica_ImageGD::TYPE_JPEG) {
+            if ($image->getType() != Replica_Image_Abstract::TYPE_JPEG) {
                 $this->assertImageFile($originPath, $actualPath, $file);
             }
         }
@@ -35,7 +35,7 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
      */
     public function testSaveWithType()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
         $path = $this->getFileNameActual(__METHOD__);

@@ -22,7 +22,7 @@ class Replica_ImageProxy_FromFileTest extends ReplicaTestCase
         $proxy = new Replica_ImageProxy_FromFile($path = $this->getFileNameInput('gif_16x14'));
         $image = $proxy->getImage();
 
-        $this->assertType('Replica_ImageGd', $image);
+        $this->assertType('Replica_Image_Gd', $image);
         $this->assertImage($image, 16, 14, 'image/gif');
     }
 

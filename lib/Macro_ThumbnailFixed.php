@@ -52,10 +52,10 @@ class Replica_Macro_ThumbnailFixed implements Replica_Macro_Interface
     /**
      * Run
      *
-     * @param  Replica_ImageGD $image
+     * @param  Replica_Image_Abstract $image
      * @return void
      */
-    public function run(Replica_ImageGD $image)
+    public function run(Replica_Image_Abstract $image)
     {
         // Check source size
         $sourceWidth  = $image->getWidth();

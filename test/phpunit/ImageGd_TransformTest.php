@@ -9,7 +9,7 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
      */
     public function testResize()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $image->resize(9, 9);
@@ -30,7 +30,7 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
      */
     public function testResizeEmptyImage()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
 
         $this->setExpectedException('Replica_Exception');
         $image->resize(10, 10);
@@ -42,7 +42,7 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
      */
     public function testCropImage()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $image->crop(0, 0, 10, 10);
@@ -57,7 +57,7 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
      */
     public function testCropWithShift()
     {
-        $image = new Replica_ImageGd;
+        $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
         $image->crop(100, 80, 200, 400);
