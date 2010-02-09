@@ -9,3 +9,6 @@ require REPLICA_DIR_TEST . '/ReplicaTestCase.php';
 
 // Lib
 require REPLICA_DIR . '/include.php';
+
+// PHPUnit
+PHPUnit_Util_Filter::addDirectoryToWhitelist(REPLICA_DIR_LIB);
