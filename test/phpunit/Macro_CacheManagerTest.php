@@ -64,7 +64,19 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
             $this->assertImage($image, 120, 90, $type, $type);
             $this->assertRegExp("/\.{$extension}$/", $path, $type);
         }
+    }
 
+
+    /**
+     * Failed mime type
+     */
+    public function testFailedMimeType()
+    {
+        $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
+        $macro = new Replica_Macro_Fake;
+
+        $this->setExpectedException('Replica_Exception', 'Unknown image type');
+        $path = $this->manager->get($macro, $imageProxy, 'unknown type');
     }
 
 

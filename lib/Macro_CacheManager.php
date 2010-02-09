@@ -61,10 +61,11 @@ class Replica_Macro_CacheManager
 
         // Run macro and cache
         if (!file_exists($filePath)) {
+            $this->_checkDir($fileDir);
+
             $image = $imageProxy->getImage();
             $macro->run($image);
 
-            $this->_checkDir($fileDir);
             $image->saveAs($filePath, $mimeType);
         }
 
@@ -100,7 +101,9 @@ class Replica_Macro_CacheManager
 
 
     /**
-     * Check/create dir to save result
+     * Check and create dir if not exists
+     *
+     * @throws Replica_Exception if failed to create dir
      *
      * @param  string $dir
      * @return void
