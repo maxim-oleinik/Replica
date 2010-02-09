@@ -5,7 +5,7 @@ class Replica_Macro_CacheManager
     /**
      * Save dir
      */
-    private static $_dir;
+    private $_dir;
 
 
     /**
@@ -14,9 +14,13 @@ class Replica_Macro_CacheManager
      * @param  string $dir
      * @return void
      */
-    static public function setDir($dir)
+    public function __construct($dir)
     {
-        self::$_dir = (string) $dir;
+        $this->_dir = (string) $dir;
+
+        if (!strlen($this->_dir)) {
+            throw new InvalidArgumentException(__METHOD__.": Expected save dir");
+        }
     }
 
 
@@ -28,7 +32,7 @@ class Replica_Macro_CacheManager
      * @param  string                         $mimeType
      * @return void
      */
-    static public function get($macro, Replica_ImageProxy $imageProxy, $mimeType = Replica_ImageGD::TYPE_PNG)
+    public function get($macro, Replica_ImageProxy $imageProxy, $mimeType = Replica_ImageGD::TYPE_PNG)
     {
         // Get macro
         if ($macro instanceof Replica_Macro_Interface) {
@@ -45,14 +49,14 @@ class Replica_Macro_CacheManager
             . get_class($macro)
             . serialize($macro->getParameters())
         );
-        $fileName .= self::_getExtension($mimeType);
+        $fileName .= $this->_getExtension($mimeType);
 
         // Define image save path
         $relativeDir = $macroName   . DIRECTORY_SEPARATOR
                      . $fileName[0] . DIRECTORY_SEPARATOR
                      . $fileName[1] . DIRECTORY_SEPARATOR
                      . $fileName[2];
-        $fileDir  = self::$_dir . DIRECTORY_SEPARATOR . $relativeDir;
+        $fileDir  = $this->_dir . DIRECTORY_SEPARATOR . $relativeDir;
         $filePath = $fileDir . DIRECTORY_SEPARATOR . $fileName;
 
         // Run macro and cache
@@ -60,7 +64,7 @@ class Replica_Macro_CacheManager
             $image = $imageProxy->getImage();
             $macro->run($image);
 
-            self::_checkDir($fileDir);
+            $this->_checkDir($fileDir);
             $image->saveAs($filePath, $mimeType);
         }
 
@@ -74,7 +78,7 @@ class Replica_Macro_CacheManager
      * @param  string $mimeType
      * @return string
      */
-    static private function _getExtension($mimeType)
+    private function _getExtension($mimeType)
     {
         switch ($mimeType) {
             case Replica_ImageGD::TYPE_PNG:
@@ -101,12 +105,8 @@ class Replica_Macro_CacheManager
      * @param  string $dir
      * @return void
      */
-    static private function _checkDir($dir)
+    private function _checkDir($dir)
     {
-        if (!self::$_dir) {
-            throw new Replica_Exception(__CLASS__.": Save dir not defined");
-        }
-
         $errorLevel = error_reporting(0);
         try {
             if (!file_exists($dir)) {

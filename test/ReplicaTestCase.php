@@ -40,6 +40,9 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
     final public function tearDown()
     {
         $this->_teardown();
+
+        Replica::removeAll();
+        Replica::setCacheManager(null);
     }
 
     protected function _teardown()

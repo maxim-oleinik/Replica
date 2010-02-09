@@ -4,17 +4,20 @@ require_once dirname(__FILE__).'/../bootstrap.php';
 
 class Replica_Macro_CacheManagerTest extends ReplicaTestCase
 {
+    private $manager;
+
+
     /**
      * SetUp
      */
     protected function _setup()
     {
-        Replica_Macro_CacheManager::setDir($this->_dirActual);
+        $this->manager = new Replica_Macro_CacheManager($this->_dirActual);
     }
 
 
     /**
-     * Run macro and cache
+     * Run macro and cache result
      */
     public function testRunMacroAndCache()
     {
@@ -26,14 +29,14 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
         Replica::setMacro('macro', $macro);
 
         // Run and cache
-        $path = Replica_Macro_CacheManager::get('macro', $imageProxy);
+        $path = $this->manager->get('macro', $imageProxy);
 
         $file = $this->_dirActual . '/' . $path;
         $this->assertRegExp("/\.png$/", $path);
         $this->assertImageFile($this->getFileNameInput('png_120x90'), $file);
 
         // From cache
-        $this->assertEquals($path, Replica_Macro_CacheManager::get('macro', $imageProxy));
+        $this->assertEquals($path, $this->manager->get('macro', $imageProxy));
     }
 
 
@@ -52,7 +55,7 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
         );
 
         foreach ($types as $type => $extension) {
-            $path = Replica_Macro_CacheManager::get($macro, $imageProxy, $type);
+            $path = $this->manager->get($macro, $imageProxy, $type);
             $file = $this->_dirActual . '/' . $path;
 
             $image = new Replica_ImageGD;
@@ -70,13 +73,8 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
      */
     public function testNoSaveDir()
     {
-        Replica_Macro_CacheManager::setDir(null);
-
-        $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
-        $macro = new Replica_Macro_Fake;
-
-        $this->setExpectedException('Replica_Exception', 'Save dir not defined');
-        Replica_Macro_CacheManager::get($macro, $imageProxy);
+        $this->setExpectedException('InvalidArgumentException', 'Expected save dir');
+        $this->manager = new Replica_Macro_CacheManager('');
     }
 
 
@@ -87,13 +85,14 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
     {
         $dir = $this->_dirActual . '/' . $this->getName();
         mkdir($dir, 0400);
-        Replica_Macro_CacheManager::setDir($dir);
+        $this->manager = new Replica_Macro_CacheManager($dir);
 
         $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
         $macro = new Replica_Macro_Fake;
 
         $this->setExpectedException('Replica_Exception', 'Failed to create directory');
-        Replica_Macro_CacheManager::get($macro, $imageProxy);
+        $this->manager->get($macro, $imageProxy);
     }
+
 
 }

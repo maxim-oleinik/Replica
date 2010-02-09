@@ -7,6 +7,11 @@ class Replica
      */
     private static $_registry = array();
 
+    /**
+     * Replica_Macro_CacheManager
+     */
+    private static $_cacheManager;
+
 
     /**
      * Static class
@@ -14,6 +19,9 @@ class Replica
     private function __construct() {}
     private function __clone() {}
 
+
+    // Macro
+    // -------------------------------------------------------------------------
 
     /**
      * Set macro
@@ -75,13 +83,44 @@ class Replica
 
 
     /**
-     * Remove all macros
+     * Remove all macro
      *
      * @return void
      */
     static public function removeAll()
     {
         self::$_registry = array();
+    }
+
+
+    // Cache
+    // -------------------------------------------------------------------------
+
+
+    /**
+     * Get cache manager
+     *
+     * @return Replica_Macro_CacheManager
+     */
+    static public function cache()
+    {
+        if (!self::$_cacheManager) {
+            throw new Replica_Exception(__METHOD__.": Cache manager not defined");
+        }
+
+        return self::$_cacheManager;
+    }
+
+
+    /**
+     * Set cache manager
+     *
+     * @param  Replica_Macro_CacheManager $manager
+     * @return void
+     */
+    static public function setCacheManager(Replica_Macro_CacheManager $manager = null)
+    {
+        self::$_cacheManager = $manager;
     }
 
 }
