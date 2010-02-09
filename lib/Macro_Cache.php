@@ -90,7 +90,7 @@ class Replica_Macro_Cache
                 break;
 
             default:
-                throw new Replica_Exception(__METHOD__.": Unknpwn image type `{$mimeType}`");
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
         }
     }
 
@@ -108,12 +108,18 @@ class Replica_Macro_Cache
         }
 
         $errorLevel = error_reporting(0);
-        if (!file_exists($dir)) {
-            if (!mkdir($dir, 0777, true)) {
-            throw new Replica_Exception(__CLASS__.": Failed to create directory `{$dir}`");
+        try {
+            if (!file_exists($dir)) {
+                if (!mkdir($dir, 0777, true)) {
+                    throw new Replica_Exception(__CLASS__.": Failed to create directory `{$dir}`");
+                }
             }
-        }
+        } catch (Exception $e) {}
         error_reporting($errorLevel);
+
+        if (isset($e)) {
+            throw $e;
+        }
     }
 
 }
