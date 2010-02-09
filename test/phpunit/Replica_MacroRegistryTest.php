@@ -20,7 +20,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
     {
         $this->assertFalse(Replica::hasMacro('macro_name'));
 
-        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Null);
         $this->assertTrue(Replica::hasMacro('macro_name'));
         $this->assertSame($macro, Replica::getMacro('macro_name'));
     }
@@ -31,7 +31,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testSetMacroWithInvalidName()
     {
-        $macro = new Replica_Macro_Fake;
+        $macro = new Replica_Macro_Null;
 
         $str = ' :;\\/~`!@#$%^&*()-=+[]{}\'\"|?<>,.я';
         for ($i=0, $n=strlen($str); $i<$n; $i++) {
@@ -58,7 +58,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testResetRegistry()
     {
-        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Null);
         Replica::removeAll();
         $this->assertFalse(Replica::hasMacro('macro_name'));
 
@@ -75,7 +75,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
         $image = new Replica_ImageGD;
         $image->loadFromFile($this->getFileNameInput('gif_16x14'));
 
-        $macro = $this->getMock('Replica_Macro_Fake', array('run'));
+        $macro = $this->getMock('Replica_Macro_Null', array('run'));
         $macro->expects($this->once())
               ->method('run')
               ->with($this->equalTo($image));
@@ -100,7 +100,7 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
      */
     public function testApplyMacroWithEmptyImage()
     {
-        Replica::setMacro('macro_name', $macro = new Replica_Macro_Fake);
+        Replica::setMacro('macro_name', $macro = new Replica_Macro_Null);
 
         $this->setExpectedException('Replica_Exception', 'Image NOT loaded');
         Replica::applyMacro('macro_name', new Replica_ImageGD);

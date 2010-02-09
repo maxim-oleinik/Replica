@@ -15,4 +15,4 @@ require_once $libDir . '/Macro_CacheManager.php';
 require_once $libDir . '/Macro_Interface.php';
 require_once $libDir . '/Macro_ThumbnailFit.php';
 require_once $libDir . '/Macro_ThumbnailFixed.php';
-require_once $libDir . '/Macro_Fake.php';
+require_once $libDir . '/Macro_Null.php';

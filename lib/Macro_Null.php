@@ -1,6 +1,6 @@
 <?php
 
-class Replica_Macro_Fake implements Replica_Macro_Interface
+class Replica_Macro_Null implements Replica_Macro_Interface
 {
     public function getParameters()
     {
