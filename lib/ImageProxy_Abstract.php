@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class Replica_ImageProxy
+abstract class Replica_ImageProxy_Abstract
 {
     protected $_image;
 

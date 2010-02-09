@@ -1,7 +1,7 @@
 <?php
 
 
-class Replica_ImageProxy_FromFile extends Replica_ImageProxy
+class Replica_ImageProxy_FromFile extends Replica_ImageProxy_Abstract
 {
     private $_file;
 

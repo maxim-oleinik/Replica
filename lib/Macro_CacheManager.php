@@ -32,7 +32,7 @@ class Replica_Macro_CacheManager
      * @param  string                         $mimeType
      * @return void
      */
-    public function get($macro, Replica_ImageProxy $imageProxy, $mimeType = Replica_ImageGD::TYPE_PNG)
+    public function get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = Replica_ImageGD::TYPE_PNG)
     {
         // Get macro
         if ($macro instanceof Replica_Macro_Interface) {

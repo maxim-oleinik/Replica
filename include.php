@@ -8,7 +8,7 @@ require_once $libDir . '/Exception.php';
 require_once $libDir . '/ImageAbstract.php';
 require_once $libDir . '/ImageGd.php';
 
-require_once $libDir . '/ImageProxy.php';
+require_once $libDir . '/ImageProxy_Abstract.php';
 require_once $libDir . '/ImageProxy_FromFile.php';
 require_once $libDir . '/Macro_CacheManager.php';
 
