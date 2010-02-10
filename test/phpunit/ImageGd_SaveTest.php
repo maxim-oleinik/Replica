@@ -44,4 +44,17 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
         $this->assertImage($path, 16, 14, 'image/png');
     }
 
+
+    /**
+     * Invalid type exception
+     */
+    public function testInvalidTypeException()
+    {
+        $image = new Replica_Image_Gd;
+        $image->loadFromFile($this->getFileNameInput('gif_16x14'));
+
+        $this->setExpectedException('Replica_Exception', 'Unknown image type');
+        $image->saveAs('/some/path', 'unknown type');
+    }
+
 }

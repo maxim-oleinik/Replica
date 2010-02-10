@@ -8,21 +8,14 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
      * Assert image is loaded
      *
      * @param  Replica_Image_Gd $image
-     * @param  bool            $loaded
      * @param  string          $message
      * @return void
      */
-    private function assertLoaded(Replica_Image_Gd $image, $loaded, $message)
+    private function assertLoaded(Replica_Image_Gd $image, $message)
     {
-        if ($loaded) {
-            $this->assertTrue($image->isLoaded(), $message.": Image is loaded");
-            $res = $image->getResource();
-            $this->assertTrue($res && is_resource($res) && get_resource_type($res) == 'gd', $message.': is GD resource');
-
-        } else {
-            $this->assertFalse($image->isLoaded(), $message.": Image is NOT loaded");
-            $this->assertNull($image->getResource(), $message.": Resource is NULL");
-        }
+        $this->assertTrue($image->isInitialized(), $message.": Expected image IS initialized");
+        $res = $image->getResource();
+        $this->assertTrue($res && is_resource($res) && get_resource_type($res) == 'gd', $message.': is GD resource');
     }
 
 
@@ -43,7 +36,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
 
             $this->assertTrue($image->loadFromFile($this->getFileNameInput($name)), "{$name}: Load successful");
             $this->assertImage($image, $width, $height, $type, $name);
-            $this->assertLoaded($image, $loaded = true, $name);
+            $this->assertLoaded($image, $name);
         }
     }
 
@@ -55,7 +48,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
     {
         $image = new Replica_Image_Gd;
         $this->assertFalse($image->loadFromFile(__FILE__), 'Load failed');
-        $this->assertLoaded($image, $loaded = false, 'Not Image');
+        $this->assertFalse($image->isInitialized(), "Expected image is NOT initialized");
     }
 
 
@@ -76,7 +69,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
 
             $this->assertTrue($image->loadFromString(file_get_contents($this->getFileNameInput($name)), $type), "{$name}: Load successful");
             $this->assertImage($image, $width, $height, $type, $name);
-            $this->assertLoaded($image, $loaded = true, $name);
+            $this->assertLoaded($image, $name);
         }
     }
 
@@ -88,21 +81,7 @@ class Replica_ImageGd_LoadTest extends ReplicaTestCase
     {
         $image = new Replica_Image_Gd;
         $this->assertFalse($image->loadFromString(file_get_contents(__FILE__), 'image/png'), 'Load failed');
-        $this->assertLoaded($image, $loaded = false, 'Not Image');
-    }
-
-
-    /**
-     * Reset image
-     */
-    public function testResetImage()
-    {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($this->getFileNameInput('gif_16x14'));
-
-        $image->reset();
-        $this->assertLoaded($image, $loaded = false, 'Reset image');
-        $this->assertImage($image, null, null, null, 'Reset image');
+        $this->assertFalse($image->isInitialized(), "Expected image is NOT initialized");
     }
 
 }

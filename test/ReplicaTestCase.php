@@ -111,7 +111,7 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals($type,   $image->getType(),   $message.'Meta (type)');
 
         if (null !== $width &&  null !== $height) {
-            $this->assertTrue($image->isLoaded(), $message.'Image is loaded');
+            $this->assertTrue($image->isInitialized(), $message.'Image is loaded');
 
             // GD
             $this->assertEquals(imagesx($image->getResource()), $width,  $message.'Resource (width)');

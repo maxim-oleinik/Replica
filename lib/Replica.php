@@ -70,7 +70,7 @@ class Replica
     static public function applyMacro($name, Replica_Image_Abstract $image)
     {
         $macro = self::getMacro($name);
-        $image->exceptionIfNotLoaded();
+        $image->exceptionIfNotInitialized();
         $macro->run($image);
     }
 

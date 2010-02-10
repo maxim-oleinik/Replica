@@ -10,87 +10,22 @@ abstract class Replica_Image_Abstract
     /**
      * Image width
      */
-    protected $_width;
+    private $_width;
 
     /**
      * Image height
      */
-    protected $_height;
+    private $_height;
 
     /**
      * Output image mime type
      */
-    protected $_type;
+    private $_type = self::TYPE_PNG;
 
     /**
-     * Flag: image is loaded
+     * Adapter resource
      */
-    protected $_isLoaded = false;
-
-
-    /**
-     * If image is loaded
-     *
-     * @return bool
-     */
-    public function isLoaded()
-    {
-        return $this->_isLoaded;
-    }
-
-
-    /**
-     * Get image width
-     *
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->_width;
-    }
-
-
-    /**
-     * Get image height
-     *
-     * @return int
-     */
-    public function getHeight()
-    {
-        return $this->_height;
-    }
-
-
-    /**
-     * Get image mime type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->_type;
-    }
-
-
-    /**
-     * Set image mime type (to save image)
-     *
-     * @param  strnig $mimeType
-     * @return void
-     */
-    public function setType($mimeType)
-    {
-        switch ($mimeType) {
-            case self::TYPE_PNG:
-            case self::TYPE_GIF:
-            case self::TYPE_JPEG:
-                $this->_type = $mimeType;
-                break;
-
-            default:
-                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
-        }
-    }
+    private $_resource;
 
 
     /**
@@ -145,7 +80,7 @@ abstract class Replica_Image_Abstract
 
 
     /**
-     * Reset image adpter implementation
+     * Reset adapter resource
      *
      * @return void
      */
@@ -153,30 +88,124 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Get image width
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->_width;
+    }
+
+
+    /**
+     * Get image height
+     *
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->_height;
+    }
+
+
+    /**
+     * Get image mime type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+
+    /**
+     * Set image mime type (to save image)
+     *
+     * @param  string $mimeType
+     * @return void
+     */
+    public function setType($mimeType)
+    {
+        switch ($mimeType) {
+            case self::TYPE_PNG:
+            case self::TYPE_GIF:
+            case self::TYPE_JPEG:
+                $this->_type = $mimeType;
+                break;
+
+            default:
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
+        }
+    }
+
+
+    /**
+     * Get adapter resource
+     *
+     * @return resource
+     */
+    public function getResource()
+    {
+        $this->exceptionIfNotInitialized();
+        return $this->_resource;
+    }
+
+
+    /**
+     * If image is loaded
+     *
+     * @return bool
+     */
+    public function isInitialized()
+    {
+        return null !== $this->_resource;
+    }
+
+
+    /**
+     * Initialize image
+     *
+     * @param  resource $resource - Adapter resource
+     * @param  int      $$width
+     * @param  int      $height
+     * @return void
+     */
+    protected function _initialize($resource, $width, $height)
+    {
+        $this->_resource = $resource;
+
+        $this->_width  = (int) $width;
+        $this->_height = (int) $height;
+    }
+
+
+    /**
      * Reset image
      */
     public function reset()
     {
-        if ($this->isLoaded()) {
+        if ($this->isInitialized()) {
             $this->_doReset();
-
-            $this->_width    = null;
-            $this->_height   = null;
-            $this->_type     = null;
-            $this->_isLoaded = false;
         }
+
+        $this->_resource = null;
+        $this->_width    = null;
+        $this->_height   = null;
+        $this->_type     = null;
     }
 
 
     /**
      * Throw exception if image is not loaded
      *
-     * @throws Replica_Exception
+     * @throws Replica_Exception_ImageNotInitialized
      */
-    public function exceptionIfNotLoaded()
+    public function exceptionIfNotInitialized()
     {
-        if (!$this->isLoaded()) {
-            throw new Replica_Exception('Image NOT loaded');
+        if (!$this->isInitialized()) {
+            throw new Replica_Exception_ImageNotInitialized;
         }
     }
 

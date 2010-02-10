@@ -3,23 +3,6 @@
 class Replica_Image_Gd extends Replica_Image_Abstract
 {
     /**
-     * GD resource
-     */
-    protected $_resource;
-
-
-    /**
-     * Get image as GD resource
-     *
-     * @return resource
-     */
-    public function getResource()
-    {
-        return $this->_resource;
-    }
-
-
-    /**
      * Load image from file
      *
      * @param  string $filePath
@@ -57,13 +40,9 @@ class Replica_Image_Gd extends Replica_Image_Abstract
             return false;
         }
 
-        $this->_resource = $res;
+        $this->_initialize($res, imagesx($res), imagesy($res));
+        $this->setType($type);
 
-        $this->_type   = $type;
-        $this->_width  = imagesx($res);
-        $this->_height = imagesy($res);
-
-        $this->_isLoaded = true;
         return true;
     }
 
@@ -94,27 +73,24 @@ class Replica_Image_Gd extends Replica_Image_Abstract
     /**
      * Resize image
      *
-     * @param int $width
-     * @param int $height
+     * @param  int $width
+     * @param  int $height
      * @return $this
      */
     public function resize($width, $height)
     {
-        $this->exceptionIfNotLoaded();
+        $res = $this->getResource();
 
         // Do not resize with same size
-        if ($width == $this->_width && $height == $this->_height) {
-            return;
+        if ($width == $this->getWidth() && $height == $this->getHeight()) {
+            return $this;
         }
 
         $target = $this->_createTrueColor($width, $height);
-        imagecopyresampled($target, $this->_resource, 0, 0, 0, 0, $width, $height, $this->_width, $this->_height);
-        imagedestroy($this->_resource);
-        $this->_resource = $target;
+        imagecopyresampled($target, $res, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
+        imagedestroy($res);
 
-        $this->_width  = $width;
-        $this->_height = $height;
-
+        $this->_initialize($target, $width, $height);
         return $this;
     }
 
@@ -130,17 +106,16 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      */
     public function crop($x, $y, $width, $height)
     {
-        $this->exceptionIfNotLoaded();
+        $res = $this->getResource();
 
-        $this->_width   = ($x + $width  > $this->_width)  ? $this->_width  - $x : $width;
-        $this->_height  = ($x + $height > $this->_height) ? $this->_height - $y : $height;
+        $newWidth  = ($x + $width  > $this->getWidth())  ? $this->getWidth()  - $x : $width;
+        $newHeight = ($x + $height > $this->getHeight()) ? $this->getHeight() - $y : $height;
 
-        $target = $this->_createTrueColor($this->_width, $this->_height);
-        imagecopy($target, $this->_resource, 0, 0, $x, $y, $this->_width, $this->_height);
+        $target = $this->_createTrueColor($newWidth, $newHeight);
+        imagecopy($target, $res, 0, 0, $x, $y, $newWidth, $newHeight);
 
-        imagedestroy($this->_resource);
-        $this->_resource = $target;
-
+        imagedestroy($res);
+        $this->_initialize($target, $newWidth, $newHeight);
 
         return $this;
     }
@@ -171,27 +146,27 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      */
     public function saveAs($fullName, $mimeType = null)
     {
-        $this->exceptionIfNotLoaded();
+        $res = $this->getResource();
 
         if ($mimeType) {
             $this->setType($mimeType);
         }
 
-        switch ($this->_type) {
+        switch ($this->getType()) {
             case self::TYPE_PNG:
-                imagepng($this->_resource, $fullName, 9);
+                imagepng($res, $fullName, 9);
                 break;
 
             case self::TYPE_GIF:
-                imagegif($this->_resource, $fullName);
+                imagegif($res, $fullName);
                 break;
 
             case self::TYPE_JPEG:
-                imagejpeg($this->_resource, $fullName);
+                imagejpeg($res, $fullName);
                 break;
 
             default:
-                throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->_type}`");
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->getType()}`");
         }
     }
 
@@ -201,8 +176,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      */
     public function _doReset()
     {
-        imagedestroy($this->_resource);
-        $this->_resource = null;
+        imagedestroy($this->getResource());
     }
 
 }
