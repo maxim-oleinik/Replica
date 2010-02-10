@@ -1,6 +1,6 @@
 <?php
 
-class Replica_Macro_Null implements Replica_Macro_Interface
+class Replica_Macro_Null extends Replica_Macro_Abstract
 {
     /**
      * Get macro parameters
@@ -19,7 +19,7 @@ class Replica_Macro_Null implements Replica_Macro_Interface
      * @param  Replica_Image_Abstract $image
      * @return void
      */
-    public function run(Replica_Image_Abstract $image)
+    protected function _doRun(Replica_Image_Abstract $image)
     {
     }
 

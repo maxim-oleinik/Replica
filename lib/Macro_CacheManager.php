@@ -27,7 +27,7 @@ class Replica_Macro_CacheManager
     /**
      * Get macro result
      *
-     * @param  string|Replica_Macro_Interface $macro
+     * @param  string|Replica_Macro_Abstract  $macro
      * @param  Replica_ImageProxy             $imageProxy
      * @param  string                         $mimeType
      * @return void
@@ -35,7 +35,7 @@ class Replica_Macro_CacheManager
     public function get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = Replica_Image_Abstract::TYPE_PNG)
     {
         // Get macro
-        if ($macro instanceof Replica_Macro_Interface) {
+        if ($macro instanceof Replica_Macro_Abstract) {
             $macroName = get_class($macro);
         } else {
             $macroName = (string) $macro;
@@ -61,11 +61,11 @@ class Replica_Macro_CacheManager
 
         // Run macro and cache
         if (!file_exists($filePath)) {
-            $this->_checkDir($fileDir);
 
             $image = $imageProxy->getImage();
             $macro->run($image);
 
+            $this->_checkDir($fileDir);
             $image->saveAs($filePath, $mimeType);
         }
 

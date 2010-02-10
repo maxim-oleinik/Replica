@@ -1,6 +1,6 @@
 <?php
 
-class Replica_Macro_ThumbnailFixed implements Replica_Macro_Interface
+class Replica_Macro_ThumbnailFixed extends Replica_Macro_Abstract
 {
     private $_width;
     private $_height;
@@ -55,7 +55,7 @@ class Replica_Macro_ThumbnailFixed implements Replica_Macro_Interface
      * @param  Replica_Image_Abstract $image
      * @return void
      */
-    public function run(Replica_Image_Abstract $image)
+    protected function _doRun(Replica_Image_Abstract $image)
     {
         // Check source size
         $sourceWidth  = $image->getWidth();

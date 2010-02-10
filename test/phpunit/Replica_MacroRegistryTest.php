@@ -94,16 +94,4 @@ class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
         Replica::applyMacro('macro_name', new Replica_Image_Gd);
     }
 
-
-    /**
-     * Apply macro with empty image
-     */
-    public function testApplyMacroWithEmptyImage()
-    {
-        Replica::setMacro('macro_name', $macro = new Replica_Macro_Null);
-
-        $this->setExpectedException('Replica_Exception_ImageNotInitialized');
-        Replica::applyMacro('macro_name', new Replica_Image_Gd);
-    }
-
 }

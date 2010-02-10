@@ -1,6 +1,6 @@
 <?php
 
-class Replica_Macro_ThumbnailFit implements Replica_Macro_Interface
+class Replica_Macro_ThumbnailFit extends Replica_Macro_Abstract
 {
     private $_maxWidth;
     private $_maxHeight;
@@ -40,7 +40,7 @@ class Replica_Macro_ThumbnailFit implements Replica_Macro_Interface
      * @param  Replica_Image_Abstract $image
      * @return void
      */
-    public function run(Replica_Image_Abstract $image)
+    protected function _doRun(Replica_Image_Abstract $image)
     {
         $sourceWidth  = $image->getWidth();
         $sourceHeight = $image->getHeight();
