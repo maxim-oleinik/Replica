@@ -5,7 +5,7 @@ require_once dirname(__FILE__).'/../bootstrap.php';
 class Replica_ImageGd_TransformTest extends ReplicaTestCase
 {
     /**
-     * Test: Resize image
+     * Resize image
      */
     public function testResize()
     {
@@ -16,24 +16,20 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
         $this->assertImage($image, 9, 9, 'image/png');
         $image->saveAs($path = $this->getFileNameActual(__METHOD__));
         $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
-
-        // Equal size
-        $image->loadFromFile($this->getFileNameInput('png_120x90'));
-        $image->resize(120, 90);
-        $image->saveAs($path = $this->getFileNameActual(__METHOD__).'_equals');
-        $this->assertImageFile($this->getFileNameInput('png_120x90'), $path);
     }
 
 
     /**
-     * Test: Resize empty image
+     * Do not resize with equal size
      */
-    public function testResizeEmptyImage()
+    public function testResizeWithEqualSize()
     {
         $image = new Replica_Image_Gd;
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
 
-        $this->setExpectedException('Replica_Exception');
-        $image->resize(10, 10);
+        $res = $image->getResource();
+        $image->resize(120, 90);
+        $this->assertSame($res, $image->getResource());
     }
 
 
@@ -64,6 +60,20 @@ class Replica_ImageGd_TransformTest extends ReplicaTestCase
         $this->assertImage($image, 20, 10, 'image/png');
         $image->saveAs($path = $this->getFileNameActual(__METHOD__));
         $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
+    }
+
+
+    /**
+     * Do not crop if same result
+     */
+    public function testDoNotCropIfSameResult()
+    {
+        $image = new Replica_Image_Gd;
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
+
+        $res = $image->getResource();
+        $image->crop(0, 0, 120, 90);
+        $this->assertSame($res, $image->getResource());
     }
 
 }

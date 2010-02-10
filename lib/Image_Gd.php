@@ -111,6 +111,11 @@ class Replica_Image_Gd extends Replica_Image_Abstract
         $newWidth  = ($x + $width  > $this->getWidth())  ? $this->getWidth()  - $x : $width;
         $newHeight = ($x + $height > $this->getHeight()) ? $this->getHeight() - $y : $height;
 
+        // Do not crop if same result
+        if (!$x && !$y && $this->getWidth() == $newWidth && $this->getHeight() == $height) {
+            return $this;
+        }
+
         $target = $this->_createTrueColor($newWidth, $newHeight);
         imagecopy($target, $res, 0, 0, $x, $y, $newWidth, $newHeight);
 
