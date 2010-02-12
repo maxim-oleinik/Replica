@@ -2,6 +2,10 @@
 
 class ReplicaTestCase extends PHPUnit_Framework_TestCase
 {
+    protected $backupGlobals = false;
+    protected $backupStaticAttributes = false;
+    protected $preserveGlobalState = false;
+
     protected
         $_dirInput,
         $_dirExpected,
@@ -9,21 +13,14 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Construct
-     */
-    public function __construct()
-    {
-        $this->_dirInput    = REPLICA_DIR_TEST . '/fixtures/input';
-        $this->_dirExpected = REPLICA_DIR_TEST . '/fixtures/expected';
-        $this->_dirActual   = REPLICA_DIR_TEST . '/fixtures/actual';
-    }
-
-
-    /**
      * SetUp
      */
     final public function setUp()
     {
+        $this->_dirInput    = REPLICA_DIR_TEST . '/fixtures/input';
+        $this->_dirExpected = REPLICA_DIR_TEST . '/fixtures/expected';
+        $this->_dirActual   = REPLICA_DIR_TEST . '/fixtures/actual';
+
         `rm -rf {$this->_dirActual}; mkdir {$this->_dirActual}`;
 
         $this->_setup();
