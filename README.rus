@@ -1,0 +1,128 @@
+Replica
+====================================
+
+Библиотека для работы с изображениями (модификация, создание превью).
+Группировка примитивных операций в набор макрокоманд с возможностью кеширования
+полученного результата.
+
+
+
+Компоненты
+----------
+* Image
+  Изображение. Реализует базовые операции над изображением, загрузку и сохранение файла.
+
+    Адаптеры:
+    - Replica_Image_Gd
+
+    Методы:
+    - конструктор: нет
+
+    - loadFromFile($filePath)       - инициализировать изображение из указанного файла
+    - loadFromString($data, $type)  - инициализировать изображение из строки
+    - isInitialized()               - флаг инициализации
+    - reset()                       - очистить состояние
+    - saveAs($fullName, $mimeType)  - сохранить
+
+    - getWidth()                    - ширина
+    - getHeight()                   - высота
+    - getType()                     - тип
+    - setType($mimeType)            - установить тип (для сохранения)
+    - getResource()                 - получить GD-ресурc
+
+    - resize($width, $height);      - изменить размер, без пропорций
+    - crop($x, $y, $width, $height) - обрезать изображение
+
+
+* Macro
+  Макрокоманда. Реализует набор простых операций над изображением.
+
+    Методы:
+    - getParameters()                    - получить набор параметров инициализации
+    - run(Replica_Image_Abstract $image) - выполнить команду
+
+    Макро:
+    - Macro_Null
+        Ничего не делает
+
+    - Macro_ThumbnailFit($width, $height)
+        Сжать картинку до указанных пределов. Результат будет сжат по любой стороне так,
+        чтобы не превышать указанных размеров.
+        Ничего не делает, если оригинал меньше указанных размеров.
+
+    - Macro_ThumbnailFixed($width, $height, $cropWidth='left', $cropHeight='top')
+        Сжать картинку и обрезать при необходимости.
+        $cropWidth  = left|center|right - как обрезать по ширине, если выступает за указанные пределы
+        $cropHeight = top|center|bottom - как обрезать по высоте, если выступает за указанные пределы
+
+
+* Cache
+  Кеширование результатов макрокоманд.
+
+    - Replica_ImageProxy_Abstract
+        Предназначен для предотвращения загрузки оригинального изображения,
+        если есть возможность получить результат из кеша
+
+        Методы:
+        - getUid()   - получить уникальный ID изображения
+        - getImage() - получить и оригинальное изображение
+
+        Классы:
+        - Replica_ImageProxy_FromFile($filePath)
+            Загрузка изображения из файла
+
+
+    - Replica_Macro_CacheManager($saveDir)
+        Возвращает результат из кеша, если он есть, или запускает макро и
+        сохраняет полученный результат.
+
+        Методы:
+        - get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = 'image/png')
+
+
+* Replica
+  Базовый класс библиотеки. Используется как хелпер и реестр макрокоманд.
+
+    Методы:
+    - setMacro($name, Replica_Macro_Abstract $macro)
+    - getMacro($name)
+    - hasMacro($name)
+    - applyMacro($name, Replica_Image_Abstract $image)
+    - removeAll()
+
+    - setCacheManager(Replica_Macro_CacheManager $manager = null)
+    - cache() - получить CacheMansger
+
+
+
+Установка и настройка
+---------------------
+
+* Установка:
+  Для подключения библиотеки можно использовать файл include.php
+  Запуск тестов:
+    [cli]
+    phpunit test/AllTests.php
+
+
+* Настройка:
+
+    [php]
+    // Указать базовую директорию для хранения закешированных результатов
+    $dir = '/my_project/www/images/thumbnails';
+    Replica::setCacheManager(new Replica_Macro_CacheManager($dir));
+
+    // Зарегистрировать макрокоманды
+    Replica::setMacro('product_thumb',   new Macro_ThumbnailFixed(40, 40, 'center', 'center'));
+    Replica::setMacro('product_preview', new Macro_ThumbnailFit(600, 600));
+
+
+
+Использование
+-------------
+
+    [php]
+    $src = '/images/thumbnails/'
+         . Replica::cache()->get('product_thumb', new Replica_ImageProxy_FromFile($filePath));
+
+    echo "<img src='{$src}' alt='' />";

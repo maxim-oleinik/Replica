@@ -26,8 +26,8 @@ class Replica_Macro_ThumbnailFixed extends Replica_Macro_Abstract
      *
      * @param  int    $width
      * @param  int    $height
-     * @param  string $cropWidth
-     * @param  string $cropHeight
+     * @param  string $cropWidth  - left|center|right
+     * @param  string $cropHeight - top|center|bottom
      * @return void
      */
     public function __construct($width, $height, $cropWidth = self::POS_LEFT, $cropHeight = self::POS_TOP)
