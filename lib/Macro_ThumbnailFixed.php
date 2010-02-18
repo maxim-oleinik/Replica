@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Make thumbnail with fixed dimensions, crops if necessary
+ *
+ * @package    Replica
+ * @subpackage Macro
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Macro_ThumbnailFixed extends Replica_Macro_Abstract
 {
     private $_width;

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * GD image
+ *
+ * @package    Replica
+ * @subpackage Image
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Image_Gd extends Replica_Image_Abstract
 {
     /**

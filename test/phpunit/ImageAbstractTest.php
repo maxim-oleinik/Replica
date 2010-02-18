@@ -1,7 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/../bootstrap.php';
 
-
+/**
+ * Image: abstraction test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_ImageAbstractTest extends ReplicaTestCase
 {
     /**

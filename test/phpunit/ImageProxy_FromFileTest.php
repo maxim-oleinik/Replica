@@ -1,7 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/../bootstrap.php';
 
-
+/**
+ * ImageProxy_FromFile test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_ImageProxy_FromFileTest extends ReplicaTestCase
 {
     /**

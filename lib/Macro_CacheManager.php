@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Macro cache manager
+ *
+ * @package    Replica
+ * @subpackage Cache
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Macro_CacheManager
 {
     /**

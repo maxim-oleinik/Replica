@@ -2,6 +2,10 @@
 
 /**
  * Base macro class
+ *
+ * @package    Replica
+ * @subpackage Macro
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 abstract class Replica_Macro_Abstract
 {

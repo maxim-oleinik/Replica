@@ -1,6 +1,12 @@
 <?php
 
-
+/**
+ * Base image proxy class
+ *
+ * @package    Replica
+ * @subpackage Cache
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 abstract class Replica_ImageProxy_Abstract
 {
     protected $_image;

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Base lib class
+ *
+ * @package    Replica
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica
 {
     /**

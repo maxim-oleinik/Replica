@@ -1,7 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/../bootstrap.php';
 
-
+/**
+ * Replica: macro registry test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Replica_MacroRegistryTest extends ReplicaTestCase
 {
     /**

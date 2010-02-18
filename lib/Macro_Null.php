@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Null macro - does not modify image
+ *
+ * @package    Replica
+ * @subpackage Macro
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Macro_Null extends Replica_Macro_Abstract
 {
     /**

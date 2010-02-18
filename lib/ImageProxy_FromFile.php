@@ -1,6 +1,12 @@
 <?php
 
-
+/**
+ * Proxies image loaded from file
+ *
+ * @package    Replica
+ * @subpackage Cache
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_ImageProxy_FromFile extends Replica_ImageProxy_Abstract
 {
     private $_file;

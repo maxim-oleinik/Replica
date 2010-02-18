@@ -2,7 +2,9 @@
 require_once(dirname(__FILE__) . '/bootstrap.php');
 
 /**
- * All Tests
+ * All lib tests
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class Replica_AllTests extends PHPUnit_Framework_TestSuite
 {

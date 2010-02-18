@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Base image class
+ *
+ * @package    Replica
+ * @subpackage Image
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 abstract class Replica_Image_Abstract
 {
     const TYPE_PNG  = 'image/png';

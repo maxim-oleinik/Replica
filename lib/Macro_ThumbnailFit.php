@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Make thumbnail fits specified dimensions
+ *
+ * @package    Replica
+ * @subpackage Macro
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Macro_ThumbnailFit extends Replica_Macro_Abstract
 {
     private $_maxWidth;

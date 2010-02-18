@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Base lib TestCase
+ *
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class ReplicaTestCase extends PHPUnit_Framework_TestCase
 {
     protected $backupGlobals = false;

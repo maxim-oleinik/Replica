@@ -1,7 +1,11 @@
 <?php
 require_once dirname(__FILE__).'/../bootstrap.php';
 
-
+/**
+ * Macro: thumbnail fixed test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class Replica_Macro_ThumbnailFixedTest extends ReplicaTestCase
 {
     /**
