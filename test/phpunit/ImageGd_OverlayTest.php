@@ -67,8 +67,24 @@ class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
         $image->loadFromFile($input = $this->getFileNameInput('png_120x90'));
 
         $logo = $this->getFileNameInput('unknown');
-        $this->setExpectedException('Replica_Exception', 'Failed to load source image from path');
+        $this->setExpectedException('Replica_Exception_ImageNotInitialized', 'Overlay image not initialized');
         $image->overlay(0, 0, $logo);
     }
 
+
+    /**
+     * Accept ImageGd object
+     */
+    public function testAcceptImageGbObject()
+    {
+        $image = new Replica_Image_Gd;
+        $image->loadFromFile($input = $this->getFileNameInput('png_120x90'));
+
+        $logo = new Replica_Image_Gd;
+        $logo->loadFromFile($this->getFileNameInput('png_transparent_60x60'));
+
+        $image->overlay(20, 10, $logo);
+        $image->saveAs($path = $this->getFileNameActual($name = __CLASS__.'::testSimpleOverlay'));
+        $this->assertImageFile($this->getFileNameExpected($name), $path);
+    }
 }

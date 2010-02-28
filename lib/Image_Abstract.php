@@ -220,10 +220,10 @@ abstract class Replica_Image_Abstract
      *
      * @throws Replica_Exception_ImageNotInitialized
      */
-    public function exceptionIfNotInitialized()
+    public function exceptionIfNotInitialized($message = null)
     {
         if (!$this->isInitialized()) {
-            throw new Replica_Exception_ImageNotInitialized;
+            throw new Replica_Exception_ImageNotInitialized($message);
         }
     }
 

@@ -9,9 +9,11 @@
  */
 class Replica_Macro_Overlay extends Replica_Macro_Abstract
 {
-    private $_posX;
-    private $_posY;
-    private $_imagePath;
+    private
+        $_posX,
+        $_posY,
+        $_imagePath,
+        $_image;
 
 
     /**
@@ -26,7 +28,10 @@ class Replica_Macro_Overlay extends Replica_Macro_Abstract
     {
         $this->_posX = (int) $x;
         $this->_posY = (int) $y;
+
         $this->_imagePath = (string) $imagePath;
+        $this->_image = new Replica_Image_Gd;
+        $this->_image->loadFromFile($this->_imagePath);
     }
 
 
@@ -53,7 +58,7 @@ class Replica_Macro_Overlay extends Replica_Macro_Abstract
      */
     protected function _doRun(Replica_Image_Abstract $image)
     {
-        $image->overlay($this->_posX, $this->_posY, $this->_imagePath);
+        $image->overlay($this->_posX, $this->_posY, $this->_image);
     }
 
 }

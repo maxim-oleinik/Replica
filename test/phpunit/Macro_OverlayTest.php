@@ -36,7 +36,7 @@ class Replica_Macro_OverlayTest extends ReplicaTestCase
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
         $image->expects($this->once())
               ->method('overlay')
-              ->with($posX, $posY, $path);
+              ->with($posX, $posY);
 
         $macro->run($image);
     }
