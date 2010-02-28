@@ -13,6 +13,7 @@ require_once $libDir . '/ImageProxy_FromFile.php';
 require_once $libDir . '/Macro_CacheManager.php';
 
 require_once $libDir . '/Macro_Abstract.php';
+require_once $libDir . '/Macro_Chain.php';
 require_once $libDir . '/Macro_Null.php';
 require_once $libDir . '/Macro_ThumbnailFit.php';
 require_once $libDir . '/Macro_ThumbnailFixed.php';
