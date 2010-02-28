@@ -77,6 +77,17 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Overlay image
+     *
+     * @param  int $x            - X-position
+     * @param  int $y            - Y-position
+     * @param  string $imagePath - Path to second image
+     * @return $this
+     */
+    abstract public function overlay($x, $y, $imagePath);
+
+
+    /**
      * Save file
      *
      * @param  string $fullName

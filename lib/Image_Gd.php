@@ -86,6 +86,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      */
     public function resize($width, $height)
     {
+        // Is initialized
         $res = $this->getResource();
 
         // Do not resize with same size
@@ -113,6 +114,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      */
     public function crop($x, $y, $width, $height)
     {
+        // Is initialized
         $res = $this->getResource();
 
         $newWidth  = ($x + $width  > $this->getWidth())  ? $this->getWidth()  - $x : $width;
@@ -128,6 +130,35 @@ class Replica_Image_Gd extends Replica_Image_Abstract
 
         imagedestroy($res);
         $this->_initialize($target, $newWidth, $newHeight);
+
+        return $this;
+    }
+
+
+    /**
+     * Overlay image
+     *
+     * @param  string $imagePath - Path to second image
+     * @param  int $x            - X-position
+     * @param  int $y            - Y-position
+     * @return $this
+     */
+    public function overlay($x, $y, $imagePath)
+    {
+        // Is initialized
+        $res = $this->getResource();
+
+        $sourceImage = new Replica_Image_Gd;
+        if (!$sourceImage->loadFromFile($imagePath)) {
+            throw new Replica_Exception(__METHOD__.": Failed to load source image from path: `{$imagePath}`");
+        }
+
+        $posX = $x > 0 ? $x : $this->getWidth() + $x - $sourceImage->getWidth();
+        $posY = $x > 0 ? $x : $this->getHeight() + $y - $sourceImage->getHeight();
+
+        // Overlay
+        imagecopy($res, $sourceImage->getResource(), $posX, $posY, 0, 0, $sourceImage->getWidth(), $sourceImage->getHeight());
+        $sourceImage->reset();
 
         return $this;
     }
