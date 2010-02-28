@@ -154,7 +154,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
         }
 
         $posX = $x > 0 ? $x : $this->getWidth() + $x - $sourceImage->getWidth();
-        $posY = $x > 0 ? $x : $this->getHeight() + $y - $sourceImage->getHeight();
+        $posY = $y > 0 ? $y : $this->getHeight() + $y - $sourceImage->getHeight();
 
         // Overlay
         imagecopy($res, $sourceImage->getResource(), $posX, $posY, 0, 0, $sourceImage->getWidth(), $sourceImage->getHeight());

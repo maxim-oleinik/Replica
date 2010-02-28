@@ -11,7 +11,7 @@ class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
     /**
      * Overlay
      */
-    public function testOverlay()
+    public function testSimpleOverlay()
     {
         $image = new Replica_Image_Gd;
         $image->loadFromFile($this->getFileNameInput('png_120x90'));
