@@ -71,16 +71,15 @@ class Replica_Macro_ThumbnailFixed extends Replica_Macro_Abstract
 
             $ratioSource = $sourceWidth / $sourceHeight;
             $ratioTarget = $this->_width / $this->_height;
+
             // Resize width
             if ($ratioSource < $ratioTarget) {
-                $newWidth  = $this->_width;
-                $newHeight = round($sourceHeight * $newWidth / $sourceWidth);
+                $image->scale($this->_width);
+
             // Resize height
             } else {
-                $newHeight = $this->_height;
-                $newWidth  = round($sourceWidth * $newHeight / $sourceHeight);
+                $image->scale(null, $this->_height);
             }
-            $image->resize($newWidth, $newHeight);
         }
 
 

@@ -200,6 +200,45 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Scale image
+     *
+     * @param  int $width
+     * @param  int $height
+     * @return $this
+     */
+    public function scale($expectedWidth = null, $expectedHeight = null)
+    {
+        // Is initialized
+        $this->getResource();
+
+        if (!$expectedWidth && !$expectedHeight) {
+            throw new InvalidArgumentException(get_class($this).'::scale: Expected width and/or height');
+        }
+
+        $thisWidth  = $this->getWidth();
+        $thisHeight = $this->getHeight();
+
+        // Scale
+        $ratioSource = $thisWidth / $thisHeight;
+
+        // Resize by width
+        if (!$expectedHeight || ($expectedWidth && $ratioSource > $expectedWidth / $expectedHeight)) {
+            $newWidth  = $expectedWidth;
+            $newHeight = round($thisHeight * $newWidth / $thisWidth);
+
+        // Resize by height
+        } else {
+            $newHeight = $expectedHeight;
+            $newWidth  = round($thisWidth * $newHeight / $thisHeight);
+        }
+
+        $this->resize($newWidth, $newHeight);
+
+        return $this;
+    }
+
+
+    /**
      * Reset image
      */
     public function reset()
