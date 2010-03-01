@@ -79,8 +79,8 @@ abstract class Replica_Image_Abstract
     /**
      * Overlay image
      *
-     * @param  int $x            - X-position
-     * @param  int $y            - Y-position
+     * @param  int $x            - left-top corner X-position, if negative right-bottom corner position
+     * @param  int $y            - left-top corner Y-position, if negative right-bottom corner position
      * @param  string $imagePath - Path to second image
      * @return $this
      */
