@@ -38,6 +38,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
     public function loadFromString($data, $type = 'image/png')
     {
         $this->reset();
+        $this->setType($type);
 
         $errLevel = error_reporting(0);
             $res = imagecreatefromstring($data);
@@ -48,7 +49,6 @@ class Replica_Image_Gd extends Replica_Image_Abstract
         }
 
         $this->_initialize($res, imagesx($res), imagesy($res));
-        $this->setType($type);
 
         return true;
     }

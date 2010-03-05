@@ -36,6 +36,25 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Constructor
+     *
+     * @param  string $image - Path to image or binary data
+     * @param  string $type  - Mime type if image loaded from string
+     * @return void
+     */
+    public function __construct($image = null, $type = null)
+    {
+        if (null !== $image) {
+            if (null !== $type) {
+                $this->loadFromString($image, $type);
+            } else {
+                $this->loadFromFile($image);
+            }
+        }
+    }
+
+
+    /**
      * Load image from file
      *
      * @param  string $filePath
@@ -178,7 +197,7 @@ abstract class Replica_Image_Abstract
      */
     public function isInitialized()
     {
-        return null !== $this->_resource;
+        return null !== $this->_resource && $this->_width > 0 && $this->_height > 0;
     }
 
 

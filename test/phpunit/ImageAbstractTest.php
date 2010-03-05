@@ -1,19 +1,68 @@
 <?php
-require_once dirname(__FILE__).'/../bootstrap.php';
-
 /**
  * Image: abstraction test
  *
  * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
  */
+require_once dirname(__FILE__).'/../bootstrap.php';
+
+
+/**
+ * Test image
+ */
+class Replica_ImageAbstractTest_Image extends Replica_Image_Abstract
+{
+    public $log;
+
+    public function loadFromFile($filePath)
+    {
+        $this->log = "loadFromFile({$filePath})";
+    }
+
+    public function loadFromString($data, $type = 'image/png')
+    {
+        $this->log = "loadFromString(,{$type})";
+    }
+
+    public function resize($width, $height) {}
+    public function crop($x, $y, $width, $height) {}
+    public function overlay($x, $y, $imagePath) {}
+    public function saveAs($fullName, $mimeType = null) {}
+    protected function _doReset() {}
+}
+
+
+/**
+ * Test
+ */
 class Replica_ImageAbstractTest extends ReplicaTestCase
 {
+    /**
+     * Create image from file
+     */
+    public function testCreateImageFromFile()
+    {
+        $image = new Replica_ImageAbstractTest_Image($path = '/some/path');
+        $this->assertEquals("loadFromFile({$path})", $image->log, 'Expected image was loaded from FILE');
+    }
+
+
+    /**
+     * Create image from string
+     */
+    public function testCreateImageFromString()
+    {
+        $image = new Replica_ImageAbstractTest_Image($data = 'image bin', $type = 'image/png');
+        $this->assertEquals("loadFromString(,{$type})", $image->log, 'Expected image was loaded from STRING');
+    }
+
+
     /**
      * Set type
      */
     public function testSetType()
     {
-        $image = new Replica_Image_Gd;
+        $image = new Replica_ImageAbstractTest_Image;
 
         $types = array(
             'image/png',
@@ -33,7 +82,7 @@ class Replica_ImageAbstractTest extends ReplicaTestCase
      */
     public function testSetTypeException()
     {
-        $image = new Replica_Image_Gd;
+        $image = new Replica_ImageAbstractTest_Image;
 
         $this->setExpectedException('Replica_Exception', 'Unknown image type');
         $image->setType('Unknown type');
@@ -45,7 +94,7 @@ class Replica_ImageAbstractTest extends ReplicaTestCase
      */
     public function testGetResourceException()
     {
-        $image = new Replica_Image_Gd;
+        $image = new Replica_ImageAbstractTest_Image;
         $this->assertFalse($image->isInitialized());
 
         $this->setExpectedException('Replica_Exception_ImageNotInitialized');
