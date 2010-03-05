@@ -138,31 +138,22 @@ class Replica_Image_Gd extends Replica_Image_Abstract
     /**
      * Overlay image
      *
-     * @param  string|ImageGd $overlayImage - Path to second image
-     * @param  int $x   - left-top corner X-position, if negative right-bottom corner position
-     * @param  int $y   - left-top corner Y-position, if negative right-bottom corner position
+     * @param  int $x  - left-top corner X-position, if negative right-bottom corner position
+     * @param  int $y  - left-top corner Y-position, if negative right-bottom corner position
+     * @param  Replica_Image_Abstract $image - Image to overlay
      * @return $this
      */
-    public function overlay($x, $y, $overlayImage)
+    public function overlay($x, $y, Replica_Image_Abstract $overlayImage)
     {
         // Is initialized
         $res = $this->getResource();
-
-        // Init overlay image
-        if (!$overlayImage instanceof Replica_Image_Abstract) {
-            $path = $overlayImage;
-            $overlayImage = new Replica_Image_Gd;
-            $overlayImage->loadFromFile($path);
-        }
         $overlayImage->exceptionIfNotInitialized(__METHOD__.": Overlay image not initialized");
-
 
         // Overlay
         $posX = $x > 0 ? $x : $this->getWidth() + $x - $overlayImage->getWidth();
         $posY = $y > 0 ? $y : $this->getHeight() + $y - $overlayImage->getHeight();
 
         imagecopy($res, $overlayImage->getResource(), $posX, $posY, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight());
-        $overlayImage->reset();
 
 
         return $this;

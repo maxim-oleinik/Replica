@@ -26,7 +26,7 @@ class Replica_ImageAbstractTest_Image extends Replica_Image_Abstract
 
     public function resize($width, $height) {}
     public function crop($x, $y, $width, $height) {}
-    public function overlay($x, $y, $imagePath) {}
+    public function overlay($x, $y, Replica_Image_Abstract $image) {}
     public function saveAs($fullName, $mimeType = null) {}
     protected function _doReset() {}
 }

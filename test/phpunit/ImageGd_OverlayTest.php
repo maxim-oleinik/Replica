@@ -8,19 +8,29 @@ require_once dirname(__FILE__).'/../bootstrap.php';
  */
 class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
 {
+    private
+        $image,
+        $overlay;
+
+    /**
+     * SetUp
+     */
+    public function _setup()
+    {
+        $this->image   = new Replica_Image_Gd($this->getFileNameInput('png_120x90'));
+        $this->overlay = new Replica_Image_Gd($this->getFileNameInput('png_transparent_60x60'));
+    }
+
+
     /**
      * Overlay
      */
     public function testSimpleOverlay()
     {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($this->getFileNameInput('png_120x90'));
+        $this->image->overlay($left = 20, $top = 10, $this->overlay);
 
-        $logo = $this->getFileNameInput('png_transparent_60x60');
-        $image->overlay($left = 20, $top = 10, $logo);
-
-        $this->assertImage($image, 120, 90, 'image/png');
-        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImage($this->image, 120, 90, 'image/png');
+        $this->image->saveAs($path = $this->getFileNameActual(__METHOD__));
         $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
     }
 
@@ -30,14 +40,10 @@ class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
      */
     public function testOverlayWithNegativeCoordinates()
     {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($this->getFileNameInput('png_120x90'));
+        $this->image->overlay($left = -20, $top = -10, $this->overlay);
 
-        $logo = $this->getFileNameInput('png_transparent_60x60');
-        $image->overlay($left = -20, $top = -10, $logo);
-
-        $this->assertImage($image, 120, 90, 'image/png');
-        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImage($this->image, 120, 90, 'image/png');
+        $this->image->saveAs($path = $this->getFileNameActual(__METHOD__));
         $this->assertImageFile($this->getFileNameExpected(__METHOD__), $path);
     }
 
@@ -47,14 +53,10 @@ class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
      */
     public function testOutOfRange()
     {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($input = $this->getFileNameInput('png_120x90'));
+        $this->image->overlay($this->image->getWidth()+1, $this->image->getHeight()+1, $this->overlay);
 
-        $logo = $this->getFileNameInput('png_transparent_60x60');
-        $image->overlay($image->getWidth()+1, $image->getHeight()+1, $logo);
-
-        $image->saveAs($path = $this->getFileNameActual(__METHOD__));
-        $this->assertImageFile($input, $path);
+        $this->image->saveAs($path = $this->getFileNameActual(__METHOD__));
+        $this->assertImageFile($this->image, $path);
     }
 
 
@@ -63,28 +65,21 @@ class Replica_ImageGd_OvewrlayTest extends ReplicaTestCase
      */
     public function testExceptionIfSourceImageNotFound()
     {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($input = $this->getFileNameInput('png_120x90'));
-
-        $logo = $this->getFileNameInput('unknown');
         $this->setExpectedException('Replica_Exception_ImageNotInitialized', 'Overlay image not initialized');
-        $image->overlay(0, 0, $logo);
+        $this->image->overlay(0, 0, new Replica_Image_Gd);
     }
 
 
     /**
-     * Accept ImageGd object
+     * Overlay not modified
      */
-    public function testAcceptImageGbObject()
+    public function testOverlayNotModified()
     {
-        $image = new Replica_Image_Gd;
-        $image->loadFromFile($input = $this->getFileNameInput('png_120x90'));
+        $this->overlay->saveAs($path = $this->getFileNameActual('overlay'));
 
-        $logo = new Replica_Image_Gd;
-        $logo->loadFromFile($this->getFileNameInput('png_transparent_60x60'));
-
-        $image->overlay(20, 10, $logo);
-        $image->saveAs($path = $this->getFileNameActual($name = __CLASS__.'::testSimpleOverlay'));
-        $this->assertImageFile($this->getFileNameExpected($name), $path);
+        $this->image->overlay(10, 20, $this->overlay);
+        $this->assertImageFile($this->overlay, $path);
     }
+
+
 }

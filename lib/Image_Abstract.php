@@ -98,12 +98,12 @@ abstract class Replica_Image_Abstract
     /**
      * Overlay image
      *
-     * @param  int $x            - left-top corner X-position, if negative right-bottom corner position
-     * @param  int $y            - left-top corner Y-position, if negative right-bottom corner position
-     * @param  string $imagePath - Path to second image
+     * @param  int $x  - left-top corner X-position, if negative right-bottom corner position
+     * @param  int $y  - left-top corner Y-position, if negative right-bottom corner position
+     * @param  Replica_Image_Abstract $image - Image to overlay
      * @return $this
      */
-    abstract public function overlay($x, $y, $imagePath);
+    abstract public function overlay($x, $y, Replica_Image_Abstract $image);
 
 
     /**
