@@ -147,6 +147,21 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Get supported types
+     *
+     * @return array
+     */
+    static public function getMimeTypes()
+    {
+        return array(
+            self::TYPE_PNG,
+            self::TYPE_GIF,
+            self::TYPE_JPEG,
+        );
+    }
+
+
+    /**
      * Get image mime type
      *
      * @return string
@@ -165,16 +180,11 @@ abstract class Replica_Image_Abstract
      */
     public function setMimeType($mimeType)
     {
-        switch ($mimeType) {
-            case self::TYPE_PNG:
-            case self::TYPE_GIF:
-            case self::TYPE_JPEG:
-                $this->_type = $mimeType;
-                break;
-
-            default:
-                throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
+        if (!in_array($mimeType, self::getMimeTypes())) {
+            throw new Replica_Exception(__METHOD__.": Unknown image type `{$mimeType}`");
         }
+
+        $this->_type = $mimeType;
     }
 
 
