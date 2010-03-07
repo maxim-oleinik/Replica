@@ -58,9 +58,9 @@ class Replica_ImageAbstractTest extends ReplicaTestCase
 
 
     /**
-     * Set type
+     * Set mime type
      */
-    public function testSetType()
+    public function testSetMimeType()
     {
         $image = new Replica_ImageAbstractTest_Image;
 
@@ -71,21 +71,21 @@ class Replica_ImageAbstractTest extends ReplicaTestCase
         );
 
         foreach ($types as $type) {
-            $image->setType($type);
-            $this->assertEquals($type, $image->getType(), "Expected type `{$type}`");
+            $image->setMimeType($type);
+            $this->assertEquals($type, $image->getMimeType(), "Expected type `{$type}`");
         }
     }
 
 
     /**
-     * Set type exception
+     * Set mime type exception
      */
-    public function testSetTypeException()
+    public function testSetMimeTypeException()
     {
         $image = new Replica_ImageAbstractTest_Image;
 
         $this->setExpectedException('Replica_Exception', 'Unknown image type');
-        $image->setType('Unknown type');
+        $image->setMimeType('Unknown type');
     }
 
 

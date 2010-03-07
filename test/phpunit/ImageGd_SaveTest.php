@@ -27,7 +27,7 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
             $image->saveAs($actualPath);
 
             $this->assertImageFile($image, $actualPath, $file);
-            if ($image->getType() != Replica_Image_Abstract::TYPE_JPEG) {
+            if ($image->getMimeType() != Replica_Image_Abstract::TYPE_JPEG) {
                 $this->assertImageFile($originPath, $actualPath, $file);
             }
         }

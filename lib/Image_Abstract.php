@@ -151,7 +151,7 @@ abstract class Replica_Image_Abstract
      *
      * @return string
      */
-    public function getType()
+    public function getMimeType()
     {
         return $this->_type;
     }
@@ -163,7 +163,7 @@ abstract class Replica_Image_Abstract
      * @param  string $mimeType
      * @return void
      */
-    public function setType($mimeType)
+    public function setMimeType($mimeType)
     {
         switch ($mimeType) {
             case self::TYPE_PNG:

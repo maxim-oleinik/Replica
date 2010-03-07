@@ -26,8 +26,8 @@ Replica
 
     - getWidth()                    - ширина
     - getHeight()                   - высота
-    - getType()                     - тип
-    - setType($mimeType)            - установить тип (для сохранения)
+    - setMimeType($type)            - установить тип (для сохранения)
+    - getMimeType()
     - getResource()                 - получить GD-ресурc
 
     - resize($width, $height);      - изменить размер, без пропорций

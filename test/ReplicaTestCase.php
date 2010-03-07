@@ -110,7 +110,7 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
         // Meta
         $this->assertEquals($width,  $image->getWidth(),  $message.'Meta (width)');
         $this->assertEquals($height, $image->getHeight(), $message.'Meta (height)');
-        $this->assertEquals($type,   $image->getType(),   $message.'Meta (type)');
+        $this->assertEquals($type,   $image->getMimeType(),   $message.'Meta (type)');
 
         if (null !== $width &&  null !== $height) {
             $this->assertTrue($image->isInitialized(), $message.'Image is loaded');
@@ -130,7 +130,7 @@ class ReplicaTestCase extends PHPUnit_Framework_TestCase
         if ($expected instanceof Replica_Image_Gd) {
             $image = new Replica_Image_Gd;
             $image->loadFromFile($actual);
-            $this->assertImage($image, $expected->getWidth(), $expected->getHeight(), $expected->getType(), $message);
+            $this->assertImage($image, $expected->getWidth(), $expected->getHeight(), $expected->getMimeType(), $message);
         } else {
             $this->assertEquals(md5_file($expected), md5_file($actual), $message);
         }

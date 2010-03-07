@@ -38,7 +38,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
     public function loadFromString($data, $type = 'image/png')
     {
         $this->reset();
-        $this->setType($type);
+        $this->setMimeType($type);
 
         $errLevel = error_reporting(0);
             $res = imagecreatefromstring($data);
@@ -188,10 +188,10 @@ class Replica_Image_Gd extends Replica_Image_Abstract
         $res = $this->getResource();
 
         if ($mimeType) {
-            $this->setType($mimeType);
+            $this->setMimeType($mimeType);
         }
 
-        switch ($this->getType()) {
+        switch ($this->getMimeType()) {
             case self::TYPE_PNG:
                 imagepng($res, $fullName, 9);
                 break;
@@ -205,7 +205,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
                 break;
 
             default:
-                throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->getType()}`");
+                throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->getMimeType()}`");
         }
     }
 
