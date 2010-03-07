@@ -27,7 +27,7 @@ class Replica_ImageProxy_FromFileTest extends ReplicaTestCase
         $image = $proxy->getImage();
 
         $this->assertType('Replica_Image_Gd', $image);
-        $this->assertImage($image, 16, 14, 'image/gif');
+        $this->assertImage($image, 16, 14, 'image/png'); // !!! PNG
     }
 
 }

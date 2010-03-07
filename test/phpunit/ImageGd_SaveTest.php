@@ -50,6 +50,33 @@ class Replica_ImageGd_SaveTest extends ReplicaTestCase
 
 
     /**
+     * Save with compression
+     */
+    public function testSaveWithCompession()
+    {
+        $image = new Replica_Image_Gd;
+
+        // PNG
+        $image->loadFromFile($this->getFileNameInput('png_120x90'));
+
+        $image->saveAs($path1 = $this->getFileNameActual(__METHOD__.'1'), 'image/png', 0);
+        $image->saveAs($path2 = $this->getFileNameActual(__METHOD__.'2'), 'image/png', 50);
+        $image->saveAs($path3 = $this->getFileNameActual(__METHOD__.'3'), 'image/png', 100);
+
+        $this->assertGreaterThan(filesize($path1), filesize($path2), 'PNG image1 less than image2');
+        $this->assertGreaterThan(filesize($path2), filesize($path3), 'PNG image2 less than image3');
+
+        // JPG
+        $image->saveAs($path1 = $this->getFileNameActual(__METHOD__.'1'), 'image/jpeg', 0);
+        $image->saveAs($path2 = $this->getFileNameActual(__METHOD__.'2'), 'image/jpeg', 50);
+        $image->saveAs($path3 = $this->getFileNameActual(__METHOD__.'3'), 'image/jpeg', 100);
+
+        $this->assertGreaterThan(filesize($path1), filesize($path2), 'JPEG image1 less than image2');
+        $this->assertGreaterThan(filesize($path2), filesize($path3), 'JPEG image2 less than image3');
+    }
+
+
+    /**
      * Invalid type exception
      */
     public function testInvalidTypeException()

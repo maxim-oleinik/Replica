@@ -30,6 +30,11 @@ abstract class Replica_Image_Abstract
     private $_type = self::TYPE_PNG;
 
     /**
+     * Image quality
+     */
+    private $_quality;
+
+    /**
      * Adapter resource
      */
     private $_resource;
@@ -189,6 +194,57 @@ abstract class Replica_Image_Abstract
 
 
     /**
+     * Set image quality
+     *
+     * @param  int  $perc - from 0 to 100
+     * @return void
+     */
+    public function setQuality($perc)
+    {
+        $perc = (int) $perc;
+        if ($perc < 0 || $perc > 100) {
+            $perc = 100;
+        }
+        $this->_quality = $perc;
+    }
+
+
+    /**
+     * Get image quality
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        if (null === $this->_quality) {
+            return $this->_getDefaultQuality();
+        }
+
+        return $this->_quality;
+    }
+
+
+    /**
+     * Get default image quality
+     *
+     * PNG is 0
+     * ALL is 100
+     *
+     * @return void
+     */
+    private function _getDefaultQuality()
+    {
+        switch ($this->_type) {
+            case self::TYPE_PNG:
+                return 0;
+
+            default:
+                return 100;
+        }
+    }
+
+
+    /**
      * Get adapter resource
      *
      * @return resource
@@ -280,6 +336,7 @@ abstract class Replica_Image_Abstract
         $this->_width    = null;
         $this->_height   = null;
         $this->_type     = null;
+        $this->_quality  = null;
     }
 
 

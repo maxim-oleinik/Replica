@@ -59,7 +59,8 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
         );
 
         foreach ($types as $type => $extension) {
-            $path = $this->manager->get($macro, $imageProxy, $type);
+            $imageProxy->setMimeType($type);
+            $path = $this->manager->get($macro, $imageProxy);
             $file = $this->_dirActual . '/' . $path;
 
             $image = new Replica_Image_Gd;
@@ -77,10 +78,11 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
     public function testFailedMimeType()
     {
         $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
+        $imageProxy->setMimeType('unknown type');
         $macro = new Replica_Macro_Null;
 
         $this->setExpectedException('Replica_Exception', 'Unknown image type');
-        $path = $this->manager->get($macro, $imageProxy, 'unknown type');
+        $path = $this->manager->get($macro, $imageProxy);
     }
 
 

@@ -9,7 +9,11 @@
  */
 abstract class Replica_ImageProxy_Abstract
 {
-    protected $_image;
+    protected
+        $_image,
+        $_mimetype = Replica_Image_Abstract::TYPE_PNG,
+        $_quality;
+
 
     /**
      * Get unique image ID
@@ -29,6 +33,41 @@ abstract class Replica_ImageProxy_Abstract
 
 
     /**
+     * Set mime type
+     *
+     * @param  string $type
+     * @return void
+     */
+    public function setMimeType($type)
+    {
+        $this->_mimetype = $type;
+    }
+
+
+    /**
+     * Set mime type
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->_mimetype;
+    }
+
+
+    /**
+     * Set quality
+     *
+     * @param  int $perc - 0-100
+     * @return void
+     */
+    public function setQuality($perc)
+    {
+        $this->_quality = $perc;
+    }
+
+
+    /**
      * Get image
      *
      * @return Replica_Image_Abstract
@@ -40,7 +79,24 @@ abstract class Replica_ImageProxy_Abstract
             $this->_loadImage($this->_image);
         }
 
+        $this->_syncProps($this->_image);
         return $this->_image;
+    }
+
+
+    /**
+     * Synchronize image props with proxy
+     *
+     * @param  Replica_Image_Abstract $image
+     * @return void
+     */
+    private function _syncProps(Replica_Image_Abstract $image)
+    {
+        $image->setMimeType($this->_mimetype);
+
+        if (null !== $this->_quality) {
+            $image->setQuality($this->_quality);
+        }
     }
 
 

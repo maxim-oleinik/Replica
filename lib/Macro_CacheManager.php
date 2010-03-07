@@ -39,7 +39,7 @@ class Replica_Macro_CacheManager
      * @param  string                         $mimeType
      * @return void
      */
-    public function get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = Replica_Image_Abstract::TYPE_PNG)
+    public function get($macro, Replica_ImageProxy_Abstract $imageProxy)
     {
         // Get macro
         if ($macro instanceof Replica_Macro_Abstract) {
@@ -56,7 +56,7 @@ class Replica_Macro_CacheManager
             . get_class($macro)
             . serialize($macro->getParameters())
         );
-        $fileName .= $this->_getExtension($mimeType);
+        $fileName .= $this->_getExtension($imageProxy->getMimeType());
 
         // Define image save path
         $relativeDir = $macroName   . DIRECTORY_SEPARATOR
@@ -73,7 +73,7 @@ class Replica_Macro_CacheManager
             $macro->run($image);
 
             $this->_checkDir($fileDir);
-            $image->saveAs($filePath, $mimeType);
+            $image->saveAs($filePath);
         }
 
         return $relativeDir . DIRECTORY_SEPARATOR . $fileName;

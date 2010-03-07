@@ -183,7 +183,7 @@ class Replica_Image_Gd extends Replica_Image_Abstract
      * @param  string $mimeType
      * @return void
      */
-    public function saveAs($fullName, $mimeType = null)
+    public function saveAs($fullName, $mimeType = null, $quality = null)
     {
         $res = $this->getResource();
 
@@ -191,9 +191,13 @@ class Replica_Image_Gd extends Replica_Image_Abstract
             $this->setMimeType($mimeType);
         }
 
+        if (null !== $quality) {
+            $this->setQuality($quality);
+        }
+
         switch ($this->getMimeType()) {
             case self::TYPE_PNG:
-                imagepng($res, $fullName, 9);
+                imagepng($res, $fullName, $this->_getCompressionLevel());
                 break;
 
             case self::TYPE_GIF:
@@ -201,11 +205,33 @@ class Replica_Image_Gd extends Replica_Image_Abstract
                 break;
 
             case self::TYPE_JPEG:
-                imagejpeg($res, $fullName);
+                imagejpeg($res, $fullName, $this->_getCompressionLevel());
                 break;
 
             default:
                 throw new Replica_Exception(__METHOD__.": Unknown image type `{$this->getMimeType()}`");
+        }
+    }
+
+
+    /**
+     * Get compession level
+     *
+     * Converts JPEG, PNG quailty to native GD level
+     *
+     * @return int
+     */
+    private function _getCompressionLevel()
+    {
+        switch ($this->getMimeType()) {
+            case self::TYPE_PNG:
+                return 9 - round($this->getQuality() * 9 / 100);
+
+            case self::TYPE_JPEG:
+                return $this->getQuality();
+
+            default:
+                return null;
         }
     }
 

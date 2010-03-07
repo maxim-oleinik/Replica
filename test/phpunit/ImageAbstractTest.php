@@ -90,6 +90,47 @@ class Replica_ImageAbstractTest extends ReplicaTestCase
 
 
     /**
+     * Set/Get Quality
+     */
+    public function testSetGetQuality()
+    {
+        $quality = array(
+            '0'   => 0,
+            ''    => 0,
+            'abc' => 0,
+            '10'  => 10,
+            '-1'  => 100,
+            '101' => 100,
+        );
+
+        $image = new Replica_ImageAbstractTest_Image;
+        foreach ($quality as $input => $expected) {
+            $image->setQuality($input);
+            $this->assertEquals($expected, $image->getQuality(), "Expected quality `{$expected}` for input `{$input}`");
+        }
+    }
+
+
+    /**
+     * Get default quality
+     */
+    public function testGetDefaultQuality()
+    {
+        $types = array(
+            'image/png'  => 0,
+            'image/gif'  => 100,
+            'image/jpeg' => 100,
+        );
+
+        foreach ($types as $type => $quality) {
+            $image = new Replica_ImageAbstractTest_Image;
+            $image->setMimeType($type);
+            $this->assertEquals($quality, $image->getQuality(), "Expected quality `{$quality}` for `{$type}`");
+        }
+    }
+
+
+    /**
      * Get resource exception
      */
     public function testGetResourceException()
