@@ -53,6 +53,7 @@ class Replica_ImageProxy_AbstractTest extends ReplicaTestCase
         $proxy = new Replica_ImageProxy_AbstractTest_Image;
         $proxy->setQuality($q = 90);
 
+        $this->assertEquals($q, $proxy->getQuality());
         $this->assertEquals($q, $proxy->getImage()->getQuality());
     }
 

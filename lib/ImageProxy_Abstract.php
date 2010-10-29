@@ -68,6 +68,17 @@ abstract class Replica_ImageProxy_Abstract
 
 
     /**
+     * Get quality
+     *
+     * @return int
+     */
+    public function getQuality()
+    {
+        return $this->_quality;
+    }
+
+
+    /**
      * Get image
      *
      * @return Replica_Image_Abstract

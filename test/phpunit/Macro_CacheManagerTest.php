@@ -27,7 +27,7 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
     {
         $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
 
-        $macro = $this->getMock('Replica_Macro_Null', array('run'));
+        $macro = $this->getMock('Replica_Macro_ThumbnailFit', array('run'), array(10, 20));
         $macro->expects($this->once())
               ->method('run');
         Replica::setMacro('macro', $macro);
@@ -69,6 +69,37 @@ class Replica_Macro_CacheManagerTest extends ReplicaTestCase
             $this->assertImage($image, 120, 90, $type, $type);
             $this->assertRegExp("/\.{$extension}$/", $path, $type);
         }
+    }
+
+
+    /**
+     * Parameters invalidate cache
+     */
+    public function testParametersInvalidateCache()
+    {
+        $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
+
+        $pathA = $this->manager->get(new Replica_Macro_ThumbnailFit(10, 20), $imageProxy);
+        $pathB = $this->manager->get(new Replica_Macro_ThumbnailFit(15, 25), $imageProxy);
+
+        $this->assertNotEquals($pathA, $pathB);
+    }
+
+
+    /**
+     * Quality invalidates cache
+     */
+    public function testQualityInvalidateCache()
+    {
+        $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
+        $imageProxy->setQuality(10);
+        $pathA = $this->manager->get(new Replica_Macro_Null, $imageProxy);
+
+        $imageProxy = new Replica_ImageProxy_FromFile($this->getFileNameInput('png_120x90'));
+        $imageProxy->setQuality(20);
+        $pathB = $this->manager->get(new Replica_Macro_Null, $imageProxy);
+
+        $this->assertNotEquals($pathA, $pathB);
     }
 
 

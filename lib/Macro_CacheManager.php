@@ -52,6 +52,7 @@ class Replica_Macro_CacheManager
         // Make UID for macro result
         $fileName = md5(
               $imageProxy->getUid()
+            . (int) $imageProxy->getQuality()
             . $macroName
             . get_class($macro)
             . serialize($macro->getParameters())
