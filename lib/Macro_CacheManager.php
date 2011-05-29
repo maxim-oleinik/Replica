@@ -16,7 +16,7 @@ class Replica_Macro_CacheManager
 
 
     /**
-     * Set cache dir
+     * Set base cache dir
      *
      * @param  string $dir
      * @return void
@@ -28,6 +28,17 @@ class Replica_Macro_CacheManager
         if (!strlen($this->_dir)) {
             throw new InvalidArgumentException(__METHOD__.": Expected save dir");
         }
+    }
+
+
+    /**
+     * Get base cache dir
+     *
+     * @return string
+     */
+    public function getBaseDir()
+    {
+        return $this->_dir;
     }
 
 
@@ -47,37 +58,54 @@ class Replica_Macro_CacheManager
         } else {
             $macroName = (string) $macro;
             $macro = Replica::getMacro((string)$macroName);
+         }
+
+        $path = $this->_getFilePath($macroName, $macro, $imageProxy);
+
+        // Run macro and cache
+        if (!file_exists($path['absolute'])) {
+
+            $image = $imageProxy->getImage();
+            $macro->run($image);
+
+            $this->_checkDir(dirname($path['absolute']));
+            $image->saveAs($path['absolute']);
         }
 
+        return $path['relative'];
+    }
+
+
+    /**
+     * Prepare file path to search/save
+     *
+     * @param  string $name
+     * @param  Replica_Macro_Abstract $macro
+     * @param  Replica_ImageProxy_Abstract $imageProxy
+     * @return array
+     */
+    protected function _getFilePath($name, Replica_Macro_Abstract $macro, Replica_ImageProxy_Abstract $imageProxy)
+    {
         // Make UID for macro result
         $fileName = md5(
               $imageProxy->getUid()
             . (int) $imageProxy->getQuality()
-            . $macroName
+            . $name
             . get_class($macro)
             . serialize($macro->getParameters())
         );
         $fileName .= $this->_getExtension($imageProxy->getMimeType());
 
         // Define image save path
-        $relativeDir = $macroName   . DIRECTORY_SEPARATOR
-                     . $fileName[0] . DIRECTORY_SEPARATOR
-                     . $fileName[1] . DIRECTORY_SEPARATOR
-                     . $fileName[2];
-        $fileDir  = $this->_dir . DIRECTORY_SEPARATOR . $relativeDir;
-        $filePath = $fileDir . DIRECTORY_SEPARATOR . $fileName;
+        $relativeDir = $name . DIRECTORY_SEPARATOR
+             . $fileName[0] . DIRECTORY_SEPARATOR
+             . $fileName[1] . DIRECTORY_SEPARATOR
+             . $fileName[2];
 
-        // Run macro and cache
-        if (!file_exists($filePath)) {
-
-            $image = $imageProxy->getImage();
-            $macro->run($image);
-
-            $this->_checkDir($fileDir);
-            $image->saveAs($filePath);
-        }
-
-        return $relativeDir . DIRECTORY_SEPARATOR . $fileName;
+        return array(
+            'absolute' => "{$this->getBaseDir()}/{$relativeDir}/{$fileName}",
+            'relative' =>                       "{$relativeDir}/{$fileName}",
+        );
     }
 
 

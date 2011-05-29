@@ -96,6 +96,7 @@ Replica
 
         Методы:
         - get($macro, Replica_ImageProxy_Abstract $imageProxy, $mimeType = 'image/png')
+        - getBaseDir()
 
 
 * Replica
