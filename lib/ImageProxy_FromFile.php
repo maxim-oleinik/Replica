@@ -18,9 +18,15 @@ class Replica_ImageProxy_FromFile extends Replica_ImageProxy_Abstract
      * @param  string $filePath - image file
      * @return void
      */
-    public function __construct($filePath)
+    public function __construct($filePath, $type = null, $quality = null)
     {
         $this->_file = (string) $filePath;
+        if ($type) {
+            $this->setMimeType($type);
+        }
+        if (null !== $quality) {
+            $this->setQuality($quality);
+        }
     }
 
 
